@@ -3,26 +3,63 @@ using System.Collections;
 
 public class InfiniteRunnerGenerator : MonoBehaviour {
 
-	public GameObject groundPrefab;
+	GameObject groundPrefab;
+	GameObject otherGroundPrefab;
 	public int BPM;
 	public int generationStartPoint;
+	public float instantiateInterval;
+	public float syncopationTime;
+	private float timer;
 	private float timeForBeat;
+	public float startTimer;
 	private int framesPerBeat = 15;
+	private bool flipper;
 	// Use this for initialization
 	void Start () {
+		groundPrefab = Resources.Load<GameObject>("prefabs/Ground");
+		otherGroundPrefab = Resources.Load<GameObject>("prefabs/RedBrick");
+		timer = instantiateInterval;
+		flipper = true;
 		timeForBeat = (60000 / (float)BPM) / 1000; // 1 minute (60,000 ms) / BPM / 1000 to convert to seconds
 		Debug.Log(timeForBeat);
-		GenBlocks();
+		// Actual rhythic block generator
+		//GenBlocks();
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		foreach(GameObject obj in GameObject.FindGameObjectsWithTag("ground")) {
-			obj.transform.Translate(new Vector3(/*-framesPerBeat * Time.fixedDeltaTime*/-1 / (float)framesPerBeat, 0f, 0f));
-			if(obj.transform.position.x < -100) {
-				Destroy(obj);
+		startTimer -= Time.fixedDeltaTime;
+		if(startTimer < 0) {
+			timer -= Time.fixedDeltaTime;
+			if(timer <= 0) {
+				GameObject temp;
+				if(flipper) {
+					temp = (GameObject)Instantiate(groundPrefab, transform.position, Quaternion.identity);
+				}
+				else {
+					temp = (GameObject)Instantiate(otherGroundPrefab, transform.position, Quaternion.identity);
+				}
+				temp.transform.localScale = new Vector3(0.8f, 1f, 1f); 
+				flipper = !flipper;
+				timer = instantiateInterval;
+			}
+			foreach(GameObject obj in GameObject.FindGameObjectsWithTag("ground")) {
+				obj.transform.Translate(new Vector3(-1 / (float)framesPerBeat, 0f, 0f));
+				if(obj.transform.position.x < -100) {
+					Destroy(obj);
+				}
+			}
+			if(syncopationTime > 0) {
+			syncopationTime -= Time.fixedDeltaTime;
+			if(syncopationTime <= 0) {
+				timer += 0.215f;
 			}
 		}
+		}
+	}
+
+	void NoFunZoneBlockGenerator() {
+		
 	}
 
 	void GenBlocks() {
