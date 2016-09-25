@@ -52,7 +52,7 @@ public class InfiniteRunnerGenerator : MonoBehaviour {
 			if(syncopationTime > 0) {
 			syncopationTime -= Time.fixedDeltaTime;
 			if(syncopationTime <= 0) {
-				timer += 0.215f;
+				timer -= 0.215f;
 			}
 		}
 		}
