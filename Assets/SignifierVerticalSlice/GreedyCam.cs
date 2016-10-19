@@ -2,34 +2,35 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class CameraTargetManager : MonoBehaviour {
+public class GreedyCam : MonoBehaviour {
 
 	public float switchFocusX;
 	UnityStandardAssets._2D.Camera2DFollow followScript;
-	public Transform cube;
-	private List<Transform> cubes;
+	public Transform Gem;
+	public float MinTimeToDistraction;
+	public float MaxTimeToDistraction;
+	private float timeToDistraction;
+	private ParticleSystem dollaBills;
 
 	// Use this for initialization
 	void Start () {
-		cubes = new List<Transform>();
-		foreach(GameObject qbe in GameObject.FindGameObjectsWithTag("red")) {
-			cubes.Add(qbe.transform);
-		}
+		timeToDistraction = Random.Range(MinTimeToDistraction, MaxTimeToDistraction);
 		followScript = Camera.main.GetComponent<UnityStandardAssets._2D.Camera2DFollow>();
+		dollaBills = Camera.main.GetComponentInChildren<ParticleSystem>();
+		dollaBills.Stop();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		foreach(Transform qbe in cubes) {
-			Debug.Log(Camera.main.orthographicSize);
-			if(followScript.target.tag != "red" && transform.position.x >= qbe.position.x - Camera.main.orthographicSize) {
-				StartCoroutine(EyesOnMe(qbe));
-				cubes.RemoveAt(0);
-				return;
-			}
+		timeToDistraction -= Time.deltaTime;
+		if(timeToDistraction <= 0) {
+			StartCoroutine(EyesOnMe(Gem));
+			dollaBills.Play();
+			timeToDistraction = Random.Range(MinTimeToDistraction, MaxTimeToDistraction);
 		}
-		if(followScript.target == null) {
+		if(Input.GetKeyDown(KeyCode.E)) {
 			StartCoroutine(EyesOnMe(GameObject.FindGameObjectWithTag("Player").transform));
+			dollaBills.Stop();
 		}
 	}
 
@@ -43,7 +44,6 @@ public class CameraTargetManager : MonoBehaviour {
 			t += Time.deltaTime;
 			yield return null;
 		}
-		Debug.Log("done focusing");
 		followScript.target = target;
 	}
 }

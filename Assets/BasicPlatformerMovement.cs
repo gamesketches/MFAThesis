@@ -6,6 +6,7 @@ public class BasicPlatformerMovement : MonoBehaviour {
 	Rigidbody2D rb;
 	Animator animator;
 	public float jumpPower;
+	public float speed;
 	// Use this for initialization
 	void Start () {
 		animator = GetComponent<Animator>();
@@ -18,7 +19,7 @@ public class BasicPlatformerMovement : MonoBehaviour {
 		float vert = Input.GetAxis("Jump");
 		if(hori != 0) {
 			animator.SetInteger("movement", 1);
-			transform.Translate(hori * Time.deltaTime, 0, 0);
+			transform.Translate(hori * speed * Time.deltaTime, 0, 0);
 
 		}
 		else {

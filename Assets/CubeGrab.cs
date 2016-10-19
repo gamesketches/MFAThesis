@@ -15,6 +15,7 @@ public class CubeGrab : MonoBehaviour {
 			lifeTime -= Time.deltaTime;
 			if(lifeTime <= 0) {
 				Camera.main.GetComponent<UnityStandardAssets._2D.Camera2DFollow>().target = GameObject.FindGameObjectWithTag("Player").transform;
+				Debug.Log(Camera.main.GetComponent<UnityStandardAssets._2D.Camera2DFollow>().target);
 				Destroy(gameObject);
 			}
 		}
