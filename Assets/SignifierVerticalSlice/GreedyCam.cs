@@ -11,9 +11,11 @@ public class GreedyCam : MonoBehaviour {
 	public float MaxTimeToDistraction;
 	private float timeToDistraction;
 	private ParticleSystem dollaBills;
+	private AudioSource audio;
 
 	// Use this for initialization
 	void Start () {
+		audio = GetComponent<AudioSource>();
 		timeToDistraction = Random.Range(MinTimeToDistraction, MaxTimeToDistraction);
 		followScript = Camera.main.GetComponent<UnityStandardAssets._2D.Camera2DFollow>();
 		dollaBills = Camera.main.GetComponentInChildren<ParticleSystem>();
@@ -31,6 +33,7 @@ public class GreedyCam : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.E)) {
 			StartCoroutine(EyesOnMe(GameObject.FindGameObjectWithTag("Player").transform));
 			dollaBills.Stop();
+			audio.Play();
 		}
 	}
 
