@@ -13,9 +13,13 @@ public class MappedController : MonoBehaviour {
 
 	SpriteRenderer miniMap;
 	SpriteRenderer spriteRenderer;
+
+
+	public GameObject rooms;
+
 	// Use this for initialization
 	void Start () {
-		correctPath = new Direction[4] {Direction.Up, Direction.Right, Direction.Right, Direction.Up};
+		correctPath = new Direction[4] {Direction.Up, Direction.Right, Direction.Right, Direction.Left};
 		currentPath = new System.Collections.Generic.List<Direction>();
 
 		miniMap = GameObject.Find("map").GetComponent<SpriteRenderer>();
@@ -25,6 +29,11 @@ public class MappedController : MonoBehaviour {
 		controls.Add(Direction.Down, KeyCode.S);
 		controls.Add(Direction.Left, KeyCode.A);
 		controls.Add(Direction.Right, KeyCode.D);
+		foreach(Transform obj in rooms.transform) {
+			obj.gameObject.SetActive(false);
+		}
+
+		rooms.transform.GetChild(0).gameObject.SetActive(true);
 	}
 	
 	// Update is called once per frame
@@ -49,30 +58,32 @@ public class MappedController : MonoBehaviour {
 	}
 
 	public void RemappControls(Direction entered) {
+		rooms.transform.GetChild(currentPath.Count).gameObject.SetActive(false);
+		KeyCode curUp = controls[Direction.Up];
+		KeyCode curDown = controls[Direction.Down];
+		KeyCode curLeft = controls[Direction.Left];
+		KeyCode curRight = controls[Direction.Right];
 		switch(entered) {
 			case Direction.Up:
-				controls[Direction.Up] = KeyCode.W;
-				controls[Direction.Down] = KeyCode.S;
-				controls[Direction.Left] = KeyCode.A;
-				controls[Direction.Right] = KeyCode.D;
+				Debug.Log("no change");
 				break;
 			case Direction.Down:
-				controls[Direction.Up] = KeyCode.S;
-				controls[Direction.Down] = KeyCode.W;
-				controls[Direction.Left] = KeyCode.D;
-				controls[Direction.Right] = KeyCode.A;
+				controls[Direction.Up] = curDown;
+				controls[Direction.Down] = curUp;
+				controls[Direction.Left] = curRight;
+				controls[Direction.Right] = curLeft;
 				break;
 			case Direction.Right:
-				controls[Direction.Up] = KeyCode.D;
-				controls[Direction.Down] = KeyCode.A;
-				controls[Direction.Left] = KeyCode.W;
-				controls[Direction.Right] = KeyCode.S;
+				controls[Direction.Up] = curRight;//KeyCode.D;
+				controls[Direction.Down] = curLeft;//KeyCode.A;
+				controls[Direction.Left] = curUp;//KeyCode.W;
+				controls[Direction.Right] = curDown;//KeyCode.S;
 				break;
 			case Direction.Left:
-				controls[Direction.Up] = KeyCode.A;
-				controls[Direction.Down] = KeyCode.D;
-				controls[Direction.Left] = KeyCode.S;
-				controls[Direction.Right] = KeyCode.W;
+				controls[Direction.Up] = curLeft;//KeyCode.A;
+				controls[Direction.Down] = curRight;//KeyCode.D;
+				controls[Direction.Left] = curDown;//KeyCode.S;
+				controls[Direction.Right] = curUp;//KeyCode.W;
 				break;
 			}
 		currentPath.Add(entered);
@@ -82,6 +93,7 @@ public class MappedController : MonoBehaviour {
 				break;
 				}
 			}
+	    rooms.transform.GetChild(currentPath.Count).gameObject.SetActive(true);
 		miniMap.sprite = Resources.LoadAll<Sprite>("minimaps")[currentPath.Count];
 		}
 }
