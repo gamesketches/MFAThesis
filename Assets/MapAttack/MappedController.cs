@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public enum Direction {Up, Down, Left, Right};
 
@@ -89,6 +90,7 @@ public class MappedController : MonoBehaviour {
 		currentPath.Add(entered);
 		for(int i = 0; i < currentPath.Count; i++) {
 			if(correctPath[i] != currentPath[i]) {
+				SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 				currentPath.Clear();
 				break;
 				}
