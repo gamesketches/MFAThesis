@@ -33,8 +33,9 @@ public class TypingGameManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		phrases = new Queue<Phrase>();
-		phrases.Enqueue(new Phrase("I like Chicken", KeyCode.G, KeyCode.J, 20));
-		phrases.Enqueue(new Phrase("I like Liver", KeyCode.T, KeyCode.Y, 20));
+		phrases.Enqueue(new Phrase("Burgess is a student", KeyCode.V, KeyCode.J, 20));
+		phrases.Enqueue(new Phrase("He goes to school", KeyCode.A, KeyCode.M, 20));
+		phrases.Enqueue(new Phrase("Burgess in both videos", KeyCode.C, KeyCode.P, 20));
 		SwitchPhrase();
 	}
 	
