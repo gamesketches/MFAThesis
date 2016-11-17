@@ -35,14 +35,19 @@ public class TypingGameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Debug.Log(currentText.rectTransform.localPosition);
 		phrases = new Queue<Phrase>();
 		phrases.Enqueue(new Phrase("Type the letters", KeyCode.None, KeyCode.None, 30, Vector2.zero));
 		phrases.Enqueue(new Phrase ("And Mind The Timer", KeyCode.None, KeyCode.None, 10, Vector2.zero));
 		phrases.Enqueue(new Phrase("Blue Letters Must Be Held", KeyCode.V, KeyCode.K, 30, new Vector2(200, 0)));
 		phrases.Enqueue(new Phrase("He goes to school", KeyCode.A, KeyCode.M, 20, new Vector2(300, 100)));
 		phrases.Enqueue(new Phrase("Burgess in both videos", KeyCode.C, KeyCode.P, 20, new Vector2(100, -300)));
-		SwitchPhrase();
+		currentPhrase = phrases.Dequeue();
+		currentText.text = currentPhrase.textContent;
+		leftHoldText.text = currentPhrase.leftHeldKey.ToString();
+		rightHoldText.text = currentPhrase.rightHeldKey.ToString();
+		currentTime = currentPhrase.timeLimit;
+		currentPhraseIndex = 0;
+
 	}
 	
 	// Update is called once per frame
@@ -81,7 +86,7 @@ public class TypingGameManager : MonoBehaviour {
 
 	bool KeysStillHeld() {
 		if(currentPhrase.leftHeldKey == KeyCode.None && currentPhrase.rightHeldKey == KeyCode.None) {
-			Color backgroundColor = new Color(247 / 255f, 248 / 255f, 233 / 255);
+			Color backgroundColor = new Color(247 / 255f, 248 / 255f, 233 / 255f);
 			leftHoldText.color = backgroundColor;
 			rightHoldText.color = backgroundColor;
 			return true;
@@ -111,17 +116,53 @@ public class TypingGameManager : MonoBehaviour {
 
 	void SwitchPhrase() {
 		if(phrases.Count >= 1) {
-			currentPhrase = phrases.Dequeue();
-			currentText.text = currentPhrase.textContent;
-			leftHoldText.text = currentPhrase.leftHeldKey.ToString();
-			rightHoldText.text = currentPhrase.rightHeldKey.ToString();
-			currentTime = currentPhrase.timeLimit;
-			currentPhraseIndex = 0;
-			currentText.rectTransform.localPosition = currentPhrase.position;
+			StartCoroutine(WrapUpOldPhrase());
 			}
 		else {
 			currentText.rectTransform.localPosition = Vector3.zero;
 			currentText.text = "YOU WIN STOP TYPING";
+			Color backgroundColor = new Color(247 / 255f, 248 / 255f, 233 / 255);
+			leftHoldText.color = backgroundColor;
+			rightHoldText.color = backgroundColor;
+		}
+	}
+
+	IEnumerator WrapUpOldPhrase() {
+		if(currentPhrase != null) {
+			float t = 0;
+			Vector3 startPos = currentText.rectTransform.localPosition;
+			Vector3 endPos = currentPhrase.position;
+			Debug.Log(currentText.rectTransform.position);
+			while(t < 1) {
+				currentText.rectTransform.localPosition = Vector3.Lerp(startPos, endPos, t);
+				t += Time.deltaTime;
+				yield return null;
+			}
+			Text oldText = Instantiate(currentText, currentText.transform.parent) as Text;
+			oldText.rectTransform.localPosition = currentPhrase.position;
+			oldText.tag = "finishedText";
+		}
+		currentPhrase = phrases.Dequeue();
+		currentText.text = currentPhrase.textContent;
+		leftHoldText.text = currentPhrase.leftHeldKey.ToString();
+		rightHoldText.text = currentPhrase.rightHeldKey.ToString();
+		currentTime = currentPhrase.timeLimit;
+		currentPhraseIndex = 0;
+		currentText.rectTransform.localPosition = currentPhrase.position + new Vector3(0, -200, 0);
+
+		foreach(GameObject text in GameObject.FindGameObjectsWithTag("finishedText")) {
+				StartCoroutine(MoveText(text.GetComponent<Text>(), new Vector3(0, 200, 0)));//)text.GetComponent<Text>().rectTransform.Translate(0, 300, 0);
+			}
+	}
+
+	IEnumerator MoveText(Text theText, Vector3 offset) {
+		float t = 0;
+		Vector3 startPos = theText.rectTransform.localPosition;
+		Vector3 endPos = startPos + offset;
+		while(t < 1) {
+			theText.rectTransform.localPosition = Vector3.Lerp(startPos, endPos, t);
+			t += Time.deltaTime;
+			yield return null;
 		}
 	}
 }
