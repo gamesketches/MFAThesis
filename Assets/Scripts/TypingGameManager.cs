@@ -11,13 +11,15 @@ public class TypingGameManager : MonoBehaviour {
 		public KeyCode rightHeldKey;
 		public float timeLimit;
 		public Vector3 position;
+		public Color myColor;
 
-		public Phrase(string content, KeyCode left, KeyCode right, float time, Vector2 newPosition) {
+		public Phrase(string content, KeyCode left, KeyCode right, float time, Vector2 newPosition, Color newColor) {
 			textContent = content;
 			leftHeldKey = left;
 			rightHeldKey = right;
 			timeLimit = time;
 			position = new Vector3(newPosition.x, newPosition.y, 0);
+			myColor = newColor;
 		}
 
 
@@ -29,18 +31,20 @@ public class TypingGameManager : MonoBehaviour {
 	public Text leftHoldText;
 	public Text rightHoldText;
 	public float offsetOnType;
+	Color backgroundColor;
 	Phrase currentPhrase;
 	int currentPhraseIndex;
 	float currentTime;
 
 	// Use this for initialization
 	void Start () {
+		backgroundColor = Camera.main.backgroundColor;
 		phrases = new Queue<Phrase>();
-		phrases.Enqueue(new Phrase("Type the letters", KeyCode.None, KeyCode.None, 30, Vector2.zero));
-		phrases.Enqueue(new Phrase ("And Mind The Timer", KeyCode.None, KeyCode.None, 10, Vector2.zero));
-		phrases.Enqueue(new Phrase("Blue Letters Must Be Held", KeyCode.V, KeyCode.K, 30, new Vector2(200, 0)));
-		phrases.Enqueue(new Phrase("He goes to school", KeyCode.A, KeyCode.M, 20, new Vector2(300, 100)));
-		phrases.Enqueue(new Phrase("Burgess in both videos", KeyCode.C, KeyCode.P, 20, new Vector2(100, -300)));
+		phrases.Enqueue(new Phrase("Type the letters", KeyCode.None, KeyCode.None, 30, Vector2.zero, backgroundColor));
+		phrases.Enqueue(new Phrase ("And Mind The Timer", KeyCode.None, KeyCode.None, 10, Vector2.zero, backgroundColor));
+		phrases.Enqueue(new Phrase("Blue Letters Must Be Held", KeyCode.V, KeyCode.K, 30, new Vector2(200, 0), backgroundColor));
+		phrases.Enqueue(new Phrase("He goes to school", KeyCode.A, KeyCode.M, 20, new Vector2(300, 100), Color.Lerp(backgroundColor, currentText.color, 0.3f)));
+		phrases.Enqueue(new Phrase("Burgess in both videos", KeyCode.C, KeyCode.P, 20, new Vector2(100, -300), Color.Lerp(backgroundColor, currentText.color, 0.6f)));
 		currentPhrase = phrases.Dequeue();
 		currentText.text = currentPhrase.textContent;
 		leftHoldText.text = currentPhrase.leftHeldKey.ToString();
@@ -72,7 +76,10 @@ public class TypingGameManager : MonoBehaviour {
 
 	void UpdateTextData() {
 		currentPhraseIndex += 1;
-		currentText.rectTransform.Translate(-offsetOnType, 0, 0);
+		foreach(GameObject text in GameObject.FindGameObjectsWithTag("finishedText")){
+			text.GetComponent<Text>().rectTransform.Translate(-offsetOnType, 0, 0);
+		}
+		//currentText.rectTransform.Translate(-offsetOnType, 0, 0);
 		if(currentPhraseIndex == currentPhrase.textContent.Length) {
 					Debug.Log("Nice!");
 					SwitchPhrase();
@@ -130,14 +137,11 @@ public class TypingGameManager : MonoBehaviour {
 	IEnumerator WrapUpOldPhrase() {
 		if(currentPhrase != null) {
 			float t = 0;
-			Vector3 startPos = currentText.rectTransform.localPosition;
-			Vector3 endPos = currentPhrase.position;
-			Debug.Log(currentText.rectTransform.position);
-			while(t < 1) {
-				currentText.rectTransform.localPosition = Vector3.Lerp(startPos, endPos, t);
-				t += Time.deltaTime;
-				yield return null;
+			Vector3 offset = currentPhrase.position - currentText.rectTransform.localPosition;
+			foreach(GameObject text in GameObject.FindGameObjectsWithTag("finishedText")) {
+				StartCoroutine(MoveText(text.GetComponent<Text>(), offset));
 			}
+			yield return StartCoroutine(MoveText(currentText, offset));
 			Text oldText = Instantiate(currentText, currentText.transform.parent) as Text;
 			oldText.rectTransform.localPosition = currentPhrase.position;
 			oldText.tag = "finishedText";
@@ -148,10 +152,11 @@ public class TypingGameManager : MonoBehaviour {
 		rightHoldText.text = currentPhrase.rightHeldKey.ToString();
 		currentTime = currentPhrase.timeLimit;
 		currentPhraseIndex = 0;
+		Camera.main.backgroundColor = currentPhrase.myColor;
 		currentText.rectTransform.localPosition = currentPhrase.position + new Vector3(0, -200, 0);
 
 		foreach(GameObject text in GameObject.FindGameObjectsWithTag("finishedText")) {
-				StartCoroutine(MoveText(text.GetComponent<Text>(), new Vector3(0, 200, 0)));//)text.GetComponent<Text>().rectTransform.Translate(0, 300, 0);
+				StartCoroutine(MoveText(text.GetComponent<Text>(), new Vector3(0, 200, 0)));
 			}
 	}
 
