@@ -9,7 +9,7 @@ public class TypingGameManager : MonoBehaviour {
 		public string textContent;
 		public KeyCode leftHeldKey;
 		public KeyCode rightHeldKey;
-		public float timeLimit;
+		public float timeBonus;
 		public Vector3 position;
 		public Color myColor;
 
@@ -17,7 +17,7 @@ public class TypingGameManager : MonoBehaviour {
 			textContent = content;
 			leftHeldKey = left;
 			rightHeldKey = right;
-			timeLimit = time;
+			timeBonus = time;
 			position = new Vector3(newPosition.x, newPosition.y, 0);
 			myColor = newColor;
 		}
@@ -30,11 +30,13 @@ public class TypingGameManager : MonoBehaviour {
 	public Text currentText;
 	public Text leftHoldText;
 	public Text rightHoldText;
+	public Text score;
 	public float offsetOnType;
 	Color backgroundColor;
 	Phrase currentPhrase;
 	int currentPhraseIndex;
-	float currentTime;
+	float currentTime = 10;
+	AudioSource audio;
 
 	// Use this for initialization
 	void Start () {
@@ -43,15 +45,16 @@ public class TypingGameManager : MonoBehaviour {
 		phrases.Enqueue(new Phrase("Type the letters", KeyCode.None, KeyCode.None, 30, Vector2.zero, backgroundColor));
 		phrases.Enqueue(new Phrase ("And Mind The Timer", KeyCode.None, KeyCode.None, 10, Vector2.zero, backgroundColor));
 		phrases.Enqueue(new Phrase("Blue Letters Must Be Held", KeyCode.V, KeyCode.K, 30, new Vector2(200, 0), backgroundColor));
-		phrases.Enqueue(new Phrase("He goes to school", KeyCode.A, KeyCode.M, 20, new Vector2(300, 100), Color.Lerp(backgroundColor, currentText.color, 0.3f)));
-		phrases.Enqueue(new Phrase("Burgess in both videos", KeyCode.C, KeyCode.P, 20, new Vector2(100, -300), Color.Lerp(backgroundColor, currentText.color, 0.6f)));
+		phrases.Enqueue(new Phrase("He goes to school", KeyCode.A, KeyCode.M, 20, new Vector2(300, 100), Color.Lerp(backgroundColor, currentText.color, 0.6f)));
+		phrases.Enqueue(new Phrase("Burgess in both videos", KeyCode.C, KeyCode.P, 20, new Vector2(100, -300), Color.Lerp(backgroundColor, currentText.color, 0.8f)));
 		currentPhrase = phrases.Dequeue();
 		currentText.text = currentPhrase.textContent;
 		leftHoldText.text = currentPhrase.leftHeldKey.ToString();
 		rightHoldText.text = currentPhrase.rightHeldKey.ToString();
-		currentTime = currentPhrase.timeLimit;
+		currentTime += currentPhrase.timeBonus;
 		currentPhraseIndex = 0;
-
+		audio = GetComponent<AudioSource>();
+		audio.clip = Resources.Load<AudioClip>("Sounds/TypingGame/type1");
 	}
 	
 	// Update is called once per frame
@@ -76,6 +79,7 @@ public class TypingGameManager : MonoBehaviour {
 
 	void UpdateTextData() {
 		currentPhraseIndex += 1;
+		audio.Play();
 		foreach(GameObject text in GameObject.FindGameObjectsWithTag("finishedText")){
 			text.GetComponent<Text>().rectTransform.Translate(-offsetOnType, 0, 0);
 		}
@@ -122,21 +126,23 @@ public class TypingGameManager : MonoBehaviour {
 	}
 
 	void SwitchPhrase() {
+		score.text = (int.Parse(score.text) + 1).ToString();
 		if(phrases.Count >= 1) {
 			StartCoroutine(WrapUpOldPhrase());
 			}
 		else {
 			currentText.rectTransform.localPosition = Vector3.zero;
 			currentText.text = "YOU WIN STOP TYPING";
-			Color backgroundColor = new Color(247 / 255f, 248 / 255f, 233 / 255);
-			leftHoldText.color = backgroundColor;
-			rightHoldText.color = backgroundColor;
+			leftHoldText.color = Camera.main.backgroundColor;
+			rightHoldText.color = Camera.main.backgroundColor;
 		}
 	}
 
 	IEnumerator WrapUpOldPhrase() {
 		if(currentPhrase != null) {
 			float t = 0;
+			audio.clip = Resources.Load<AudioClip>("Sounds/TypingGame/slide");
+			audio.Play();
 			Vector3 offset = currentPhrase.position - currentText.rectTransform.localPosition;
 			foreach(GameObject text in GameObject.FindGameObjectsWithTag("finishedText")) {
 				StartCoroutine(MoveText(text.GetComponent<Text>(), offset));
@@ -146,11 +152,12 @@ public class TypingGameManager : MonoBehaviour {
 			oldText.rectTransform.localPosition = currentPhrase.position;
 			oldText.tag = "finishedText";
 		}
+		audio.clip = Resources.Load<AudioClip>("Sounds/TypingGame/type1");
 		currentPhrase = phrases.Dequeue();
 		currentText.text = currentPhrase.textContent;
 		leftHoldText.text = currentPhrase.leftHeldKey.ToString();
 		rightHoldText.text = currentPhrase.rightHeldKey.ToString();
-		currentTime = currentPhrase.timeLimit;
+		currentTime += currentPhrase.timeBonus;
 		currentPhraseIndex = 0;
 		Camera.main.backgroundColor = currentPhrase.myColor;
 		currentText.rectTransform.localPosition = currentPhrase.position + new Vector3(0, -200, 0);

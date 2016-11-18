@@ -17,12 +17,14 @@ public class AnemoneBehavior : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other) {
 		if(other.tag == "egg") {
 			consuming = true;
+			Debug.Log("EGG ACCEPTED");
 		}
 	}
 
 	void OnTriggerExit2D(Collider2D other) {
 		if(other.tag == "egg") {
 			consuming = false;
+			Debug.Log("EGG LEFT");
 		}
 	}
 }
