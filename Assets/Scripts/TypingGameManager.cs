@@ -61,7 +61,7 @@ public class TypingGameManager : MonoBehaviour {
 	void Update () {
 		UpdateTimer();
 		if(KeysStillHeld()) {
-			if(Input.GetKeyDown(CurrentCharacter())) {
+			if(currentPhraseIndex < currentPhrase.textContent.Length && Input.GetKeyDown(CurrentCharacter())) {
 				UpdateTextData();
 			}
 		}
@@ -87,6 +87,7 @@ public class TypingGameManager : MonoBehaviour {
 		if(currentPhraseIndex == currentPhrase.textContent.Length) {
 					Debug.Log("Nice!");
 					SwitchPhrase();
+			currentText.text = string.Concat("<color=black>", currentPhrase.textContent.Substring(0, currentPhraseIndex), "</color>", currentPhrase.textContent.Substring(currentPhraseIndex));
 					return;
 		}
 		if(currentPhrase.textContent[currentPhraseIndex] == ' '){
