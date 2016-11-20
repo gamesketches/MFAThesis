@@ -15,16 +15,11 @@ public class AnemoneBehavior : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
-		if(other.tag == "egg") {
+		if(other.tag == "egg" && !consuming) {
 			consuming = true;
-			Debug.Log("EGG ACCEPTED");
+			GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("FullAnemone");
+			Destroy(other.gameObject);
 		}
 	}
 
-	void OnTriggerExit2D(Collider2D other) {
-		if(other.tag == "egg") {
-			consuming = false;
-			Debug.Log("EGG LEFT");
-		}
-	}
 }
