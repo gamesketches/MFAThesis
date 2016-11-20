@@ -19,6 +19,7 @@ public class AnemoneBehavior : MonoBehaviour {
 			consuming = true;
 			GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("FullAnemone");
 			Destroy(other.gameObject);
+			Instantiate(Resources.Load<GameObject>("prefabs/BubbleParticles"), transform.position, Quaternion.identity);
 		}
 	}
 
