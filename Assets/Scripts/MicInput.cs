@@ -44,6 +44,10 @@ public class MicInput : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if(!_isInitialized) {
+			InitMic();
+			_isInitialized = true;
+		}
 		MicLoudness = LevelMax() * 100;
 	}
 
@@ -59,5 +63,9 @@ public class MicInput : MonoBehaviour {
 			StopMicrophone();
 			_isInitialized = false;
 		}
+	}
+
+	public void ResetMic() {
+		_isInitialized = false;
 	}
 }

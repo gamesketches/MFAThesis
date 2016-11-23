@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class AcrobaticPlatformer : MonoBehaviour {
@@ -9,16 +10,27 @@ public class AcrobaticPlatformer : MonoBehaviour {
 	public float jumpPower;
 	public float speed;
 	public bool wallCling;
+	public float freezeTime;
+	public float noiseLimit;
+	bool restarting;
+	MicInput mic;
+	AudioSource audio;
 	// Use this for initialization
 	void Start () {
+		restarting = false;
 		wallCling = false;
 		animator = GetComponent<Animator>();
 		rb = GetComponent<Rigidbody2D>();
 		renderer = GetComponent<SpriteRenderer>();
+		mic = GetComponent<MicInput>();
+		audio = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if(mic.MicLoudness > noiseLimit && !restarting) {
+			StartCoroutine(DeathFreeze());
+		}
 		if(wallCling) {
 			float vert = Input.GetAxis("Jump");
 			Debug.Log("wall cling!");
@@ -27,7 +39,7 @@ public class AcrobaticPlatformer : MonoBehaviour {
 			if(vert != 0) {
 				wallCling = false;
 				rb.gravityScale = 1;
-				rb.AddForce(new Vector2(0, jumpPower), ForceMode2D.Force);
+				rb.AddForce(new Vector2(0, jumpPower), ForceMode2D.Impulse);
 			}
 		}
 		else {
@@ -57,5 +69,19 @@ public class AcrobaticPlatformer : MonoBehaviour {
 				}
 			}
 		}
+	}
+
+	IEnumerator DeathFreeze() {
+		if(!audio.isPlaying) {
+		audio.Play();
+		}
+		float startTime = Time.realtimeSinceStartup;
+		Time.timeScale = 0;
+		while(Time.realtimeSinceStartup < startTime + freezeTime) {
+			yield return null;
+		}
+		Time.timeScale = 1;
+
+		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
 }
