@@ -28,9 +28,9 @@ public class AcrobaticPlatformer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(mic.MicLoudness > noiseLimit && !restarting) {
+		/*if(mic.MicLoudness > noiseLimit && !restarting) {
 			StartCoroutine(DeathFreeze());
-		}
+		}*/
 		if(wallCling) {
 			float vert = Input.GetAxis("Jump");
 			Debug.Log("wall cling!");

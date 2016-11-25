@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.IO;
 using System.Xml;
@@ -19,12 +20,29 @@ public class MenuBuilder : MonoBehaviour {
 		menuXML = new XmlDocument();
 		menuXML.LoadXml(menuData.text);
 
-		MethodInfo method = playerType.GetMethod(menuXML.ChildNodes[1].InnerText);
+		Debug.Log(menuXML.ChildNodes[1].FirstChild);
+		XmlNode topNode = menuXML.ChildNodes[1].FirstChild;
+
+		GenMenuList(topNode, transform);
+
+		MethodInfo method = playerType.GetMethod(topNode.FirstChild.InnerText);
 		method.Invoke(player, new object[0]);
 	}
 	
 	// Update is called once per frame
-	void Update () {
-			
+	void GenMenuList (XmlNode topNode, Transform parent) {
+		GameObject listOption = (GameObject)Instantiate(Resources.Load<GameObject>("prefabs/OptionList"));
+		listOption.transform.parent = transform;
+		foreach(XmlNode node in topNode.ChildNodes) {
+			if(node.Name == "Action") {
+				GameObject actionOption = (GameObject)Instantiate(Resources.Load<GameObject>("prefabs/MenuAction"));
+				actionOption.transform.parent = listOption.transform;
+				actionOption.GetComponentInChildren<Text>().text = node.InnerText;
+			}
+			else if(node.Name == "List") {
+				GenMenuList(node, listOption.transform);
+			}
+			else Debug.Log(node.InnerText);
+		}
 	}
 }
