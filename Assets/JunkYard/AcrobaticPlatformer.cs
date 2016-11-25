@@ -84,4 +84,8 @@ public class AcrobaticPlatformer : MonoBehaviour {
 
 		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
+
+	public void PrintTest() {
+		Debug.Log("printin");
+	}
 }

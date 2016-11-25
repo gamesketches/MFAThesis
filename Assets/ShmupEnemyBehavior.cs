@@ -24,4 +24,5 @@ public class ShmupEnemyBehavior : MonoBehaviour {
 	public void SetAnimationCurve(Keyframe[] points) {
 		travelArc = new AnimationCurve(points);
 	}
+
 }
