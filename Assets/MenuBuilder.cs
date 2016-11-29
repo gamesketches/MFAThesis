@@ -10,9 +10,12 @@ public class MenuBuilder : MonoBehaviour {
 
 	XmlDocument menuXML;
 	AcrobaticPlatformer player;
+	Vector3 offset;
 
 	// Use this for initialization
 	void Start () {
+		RectTransform rect = Resources.Load<GameObject>("prefabs/MenuAction").GetComponent<RectTransform>();
+		offset = new Vector3(rect.rect.width, rect.rect.height, 0);
 		player = GameObject.FindGameObjectWithTag("Player").GetComponent<AcrobaticPlatformer>();
 		TextAsset menuData = Resources.Load("MenuXML") as TextAsset;
 
@@ -31,11 +34,14 @@ public class MenuBuilder : MonoBehaviour {
 	
 	// Update is called once per frame
 	void GenMenuList (XmlNode topNode, Transform parent) {
-		GameObject listOption = (GameObject)Instantiate(Resources.Load<GameObject>("prefabs/OptionList"));
+		Vector3 newPos = parent.position;
+		newPos.x += offset.x;
+		GameObject listOption = (GameObject)Instantiate(Resources.Load<GameObject>("prefabs/OptionList"), newPos, Quaternion.identity);
 		listOption.transform.parent = transform;
+		int numOptionsInList = 0;
 		foreach(XmlNode node in topNode.ChildNodes) {
 			if(node.Name == "Action") {
-				GameObject actionOption = (GameObject)Instantiate(Resources.Load<GameObject>("prefabs/MenuAction"));
+				GameObject actionOption = (GameObject)Instantiate(Resources.Load<GameObject>("prefabs/MenuAction"), newPos, Quaternion.identity);
 				actionOption.transform.parent = listOption.transform;
 				actionOption.GetComponentInChildren<Text>().text = node.InnerText;
 			}
@@ -43,6 +49,9 @@ public class MenuBuilder : MonoBehaviour {
 				GenMenuList(node, listOption.transform);
 			}
 			else Debug.Log(node.InnerText);
+
+			numOptionsInList++;
+			newPos.y -= offset.y;
 		}
 	}
 }

@@ -2,5 +2,9 @@
 <Root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
  <List>
  	<Action>PrintTest</Action>
+ 	<List>
+ 		<Action>jampu</Action>
+ 		<Action>ran</Action>
+ 	</List>
  </List>
 </Root>
