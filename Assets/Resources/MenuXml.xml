@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <Root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
  <List>
- 	<Action>PrintTest</Action>
+ 	<Action>MoveRight</Action>
  	<List>
- 		<Action>jampu</Action>
- 		<Action>ran</Action>
+ 		<Action>MoveRight</Action>
+ 		<Action>Jump</Action>
  	</List>
  </List>
 </Root>

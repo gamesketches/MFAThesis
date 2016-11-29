@@ -29,7 +29,6 @@ public class CatBehavior : MonoBehaviour {
 			state =  (CatState)System.Enum.GetValues(typeof(CatState)).GetValue(Random.Range(0, 4));
 			controller.SetInteger("catState", (int) state);
 			StartCoroutine(EyesOnMe(transform));
-			Debug.Log("resetting timer to " + timer.ToString());
 		}
 		switch(state) {
 			case CatState.Walk: 

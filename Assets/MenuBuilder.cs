@@ -9,32 +9,33 @@ using System.Reflection;
 public class MenuBuilder : MonoBehaviour {
 
 	XmlDocument menuXML;
-	AcrobaticPlatformer player;
+	MenuBasedPlatformerMovement player;
 	Vector3 offset;
+	Type playerType;
 
 	// Use this for initialization
 	void Start () {
 		RectTransform rect = Resources.Load<GameObject>("prefabs/MenuAction").GetComponent<RectTransform>();
 		offset = new Vector3(rect.rect.width, rect.rect.height, 0);
-		player = GameObject.FindGameObjectWithTag("Player").GetComponent<AcrobaticPlatformer>();
+		player = GameObject.FindGameObjectWithTag("Player").GetComponent<MenuBasedPlatformerMovement>();
+		Debug.Log(player);
 		TextAsset menuData = Resources.Load("MenuXML") as TextAsset;
 
-		Type playerType = Type.GetType("AcrobaticPlatformer");
+		playerType = Type.GetType("MenuBasedPlatformerMovement");
 		menuXML = new XmlDocument();
 		menuXML.LoadXml(menuData.text);
 
-		Debug.Log(menuXML.ChildNodes[1].FirstChild);
 		XmlNode topNode = menuXML.ChildNodes[1].FirstChild;
 
-		GenMenuList(topNode, transform);
+		GenMenuList(topNode, transform, new Vector3(0, 0, 0));
 
-		MethodInfo method = playerType.GetMethod(topNode.FirstChild.InnerText);
-		method.Invoke(player, new object[0]);
+		//MethodInfo method = playerType.GetMethod(topNode.FirstChild.InnerText);
+		//method.Invoke(player, new object[0]);
 	}
 	
 	// Update is called once per frame
-	void GenMenuList (XmlNode topNode, Transform parent) {
-		Vector3 newPos = parent.position;
+	void GenMenuList (XmlNode topNode, Transform parent, Vector3 position) {
+		Vector3 newPos = position;
 		newPos.x += offset.x;
 		GameObject listOption = (GameObject)Instantiate(Resources.Load<GameObject>("prefabs/OptionList"), newPos, Quaternion.identity);
 		listOption.transform.parent = transform;
@@ -42,11 +43,12 @@ public class MenuBuilder : MonoBehaviour {
 		foreach(XmlNode node in topNode.ChildNodes) {
 			if(node.Name == "Action") {
 				GameObject actionOption = (GameObject)Instantiate(Resources.Load<GameObject>("prefabs/MenuAction"), newPos, Quaternion.identity);
-				actionOption.transform.parent = listOption.transform;
+				actionOption.transform.SetParent(parent, false);
+				actionOption.GetComponent<MenuActionScript>().Initialize(playerType.GetMethod(node.InnerText), player);
 				actionOption.GetComponentInChildren<Text>().text = node.InnerText;
 			}
 			else if(node.Name == "List") {
-				GenMenuList(node, listOption.transform);
+				GenMenuList(node, listOption.transform, newPos);
 			}
 			else Debug.Log(node.InnerText);
 
