@@ -12,6 +12,7 @@ public class MenuBuilder : MonoBehaviour {
 	MenuBasedPlatformerMovement player;
 	Vector3 offset;
 	Type playerType;
+	MenuController pointer;
 
 	// Use this for initialization
 	void Start () {
@@ -28,11 +29,15 @@ public class MenuBuilder : MonoBehaviour {
 
 		XmlNode topNode = menuXML.ChildNodes[1].FirstChild;
 
-		GenMenuList(topNode, transform, new Vector3(-offset.x, 0, 0));
+		pointer = GetComponent<MenuController>();
+
+		pointer.Initialize(GenMenuList(topNode, transform, new Vector3(0, 0, 0)));
+
+
 	}
 	
 	// Update is called once per frame
-	void GenMenuList (XmlNode topNode, Transform parent, Vector3 position) {
+	Transform GenMenuList (XmlNode topNode, Transform parent, Vector3 position) {
 		Vector3 newPos = position;
 		newPos.x += offset.x;
 		Debug.Log(newPos);
@@ -42,7 +47,7 @@ public class MenuBuilder : MonoBehaviour {
 		foreach(XmlNode node in topNode.ChildNodes) {
 			if(node.Name == "Action") {
 				GameObject actionOption = (GameObject)Instantiate(Resources.Load<GameObject>("prefabs/MenuAction"), newPos, Quaternion.identity);
-				actionOption.transform.SetParent(parent, false);
+				actionOption.transform.SetParent(listOption.transform, false);
 				actionOption.GetComponent<MenuActionScript>().Initialize(playerType.GetMethod(node.InnerText), player);
 				actionOption.GetComponentInChildren<Text>().text = node.InnerText;
 			}
@@ -54,5 +59,7 @@ public class MenuBuilder : MonoBehaviour {
 			numOptionsInList++;
 			newPos.y -= offset.y;
 		}
+
+		return listOption.transform;
 	}
 }
