@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class TypingGameManager : MonoBehaviour {
 
@@ -38,8 +39,11 @@ public class TypingGameManager : MonoBehaviour {
 	float currentTime = 10;
 	AudioSource audio;
 
+	HighScoreManager highScoreList;
+
 	// Use this for initialization
 	void Start () {
+		highScoreList = GetComponent<HighScoreManager>();
 		backgroundColor = Camera.main.backgroundColor;
 		phrases = new Queue<Phrase>();
 		phrases.Enqueue(new Phrase("Type the letters", KeyCode.None, KeyCode.None, 30, Vector2.zero, backgroundColor));
@@ -59,10 +63,12 @@ public class TypingGameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		UpdateTimer();
-		if(KeysStillHeld()) {
-			if(currentPhraseIndex < currentPhrase.textContent.Length && Input.GetKeyDown(CurrentCharacter())) {
-				UpdateTextData();
+		if(!GameOver()) {
+			UpdateTimer();
+			if(KeysStillHeld()) {
+				if(currentPhraseIndex < currentPhrase.textContent.Length && Input.GetKeyDown(CurrentCharacter())) {
+					UpdateTextData();
+				}
 			}
 		}
 	}
@@ -87,7 +93,6 @@ public class TypingGameManager : MonoBehaviour {
 		if(currentPhraseIndex == currentPhrase.textContent.Length) {
 					Debug.Log("Nice!");
 					SwitchPhrase();
-			currentText.text = string.Concat("<color=black>", currentPhrase.textContent.Substring(0, currentPhraseIndex), "</color>", currentPhrase.textContent.Substring(currentPhraseIndex));
 					return;
 		}
 		if(currentPhrase.textContent[currentPhraseIndex] == ' '){
@@ -136,6 +141,9 @@ public class TypingGameManager : MonoBehaviour {
 			currentText.text = "YOU WIN STOP TYPING";
 			leftHoldText.color = Camera.main.backgroundColor;
 			rightHoldText.color = Camera.main.backgroundColor;
+			if(highScoreList.MadeHighScoreList((int)float.Parse(timer.text))){
+				highScoreList.InputNewName((int)float.Parse(timer.text));
+			}
 		}
 	}
 
@@ -178,4 +186,9 @@ public class TypingGameManager : MonoBehaviour {
 			yield return null;
 		}
 	}
+
+	bool GameOver() {
+		return phrases.Count == 0 && currentPhraseIndex == currentPhrase.textContent.Length;
+	}
+
 }

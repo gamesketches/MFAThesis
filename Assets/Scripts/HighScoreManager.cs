@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class HighScoreManager : MonoBehaviour {
 
@@ -31,19 +32,38 @@ public class HighScoreManager : MonoBehaviour {
 	public Text HighScoreDisplay;
 	public int numEntries = 10;
 	public List<Entry> entries;
+	private string HighScoreHeader;
+	private string nameEntry;
+	private int scoreEntry;
+	bool enteringScore;
 
 	// Use this for initialization
 	void Start () {
+		enteringScore = false;
+		HighScoreHeader = SceneManager.GetActiveScene().name + "HighScore";
 		entries = new List<Entry>();
 		string key;
 		for(int i = 0; i < numEntries; i++) {
-			key = "HighScore" + i.ToString();
+			key = HighScoreHeader + i.ToString();
 			if(PlayerPrefs.HasKey(key + "score")) {
-				entries.Add(new Entry(PlayerPrefs.GetString(key + "name"), PlayerPrefs.GetInt(key + "score")));//entries[i] = new Entry(PlayerPrefs.GetString(key + "name"), PlayerPrefs.GetInt(key + "score"));
+				entries.Add(new Entry(PlayerPrefs.GetString(key + "name"), PlayerPrefs.GetInt(key + "score")));
 			}
 			else {
-				entries.Add(new Entry(Random.value > 0.5 ? "Sam" : "Noca", 0));//entries[i] = new Entry(Random.value > 0.5 ? "Sam" : "Noca", 0);
-				//break;
+				entries.Add(new Entry("Sam", 0));
+			}
+		}
+	}
+
+	void Update() {
+		if(enteringScore) {
+			if(Input.GetKeyDown(KeyCode.Return)) {
+				CreateNewEntry(nameEntry, scoreEntry);
+				enteringScore = false;
+				StartCoroutine(DisplayAndReset());
+			}
+			else {
+				HighScoreDisplay.text = "ENTER YOUR NAME\n " + nameEntry;
+				nameEntry = string.Concat(nameEntry, Input.inputString);
 			}
 		}
 	}
@@ -51,7 +71,7 @@ public class HighScoreManager : MonoBehaviour {
 	public void SetScores() {
 		string key;
 		for(int i = 0; i < numEntries; i++) {
-			key = "HighScore" + i.ToString();
+			key = HighScoreHeader + i.ToString();
 			PlayerPrefs.SetString(key + "name", entries[i].name);
 			PlayerPrefs.SetInt(key + "score", entries[i].score);
 		}
@@ -68,7 +88,7 @@ public class HighScoreManager : MonoBehaviour {
 	public void ClearLeaderBoard() {
 		string key;
 		for(int i = 0; i < numEntries; i++) {
-			key = "HighScore" + i.ToString();
+			key = HighScoreHeader + i.ToString();
 			PlayerPrefs.DeleteKey(key + "name");
 			PlayerPrefs.DeleteKey(key + "score");
 		}
@@ -93,5 +113,16 @@ public class HighScoreManager : MonoBehaviour {
 		}
 		SetScores();
 		entries.Remove(entries[numEntries]);
+	}
+
+	public void InputNewName(int score) {
+		enteringScore = true;
+		scoreEntry = score;
+	}
+
+	IEnumerator DisplayAndReset() {
+		PrintScores();
+		yield return new WaitForSeconds(5);
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 	}
 }
