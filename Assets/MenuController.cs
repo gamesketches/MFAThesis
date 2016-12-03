@@ -10,7 +10,6 @@ public class MenuController : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		pointer = (GameObject)Instantiate(Resources.Load<GameObject>("prefabs/MenuSelector"));
-		Debug.Log(pointer);
 		pointer.transform.SetParent(GameObject.Find("Canvas").transform);
 		listPosition = 1;
 	}
@@ -38,13 +37,27 @@ public class MenuController : MonoBehaviour {
 			}
 			currentOption = currentOption.transform.parent.GetChild(siblingIndex);
 		}
-		if(Input.GetKeyDown(KeyCode.Space)) {
+		if(Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) {
 			MenuActionScript actionScript = currentOption.GetComponent<MenuActionScript>();
 			actionScript.Activate();
 			if(actionScript.listOption) {
 				currentOptionList = currentOption.transform.GetChild(1).GetComponentsInChildren<Transform>();
 				listPosition = 1;
 				currentOption = currentOptionList[listPosition];
+			}
+		}
+		if(Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A)) {
+			Transform grandParent = currentOption.transform.parent.parent;
+			if(grandParent != transform.root) {
+				currentOptionList = grandParent.parent.GetComponentsInChildren<Transform>();
+				for(int i = 0; i < currentOptionList.Length; i++) {
+					if(currentOptionList[i] == grandParent) {
+						listPosition = i;
+						break;
+					}
+				}
+				currentOption = grandParent;
+				grandParent.GetComponent<MenuActionScript>().DeActivate();
 			}
 		}
 		UpdatePosition();
