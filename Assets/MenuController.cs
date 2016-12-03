@@ -8,8 +8,9 @@ public class MenuController : MonoBehaviour {
 	int listPosition;
 	GameObject pointer;
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		pointer = (GameObject)Instantiate(Resources.Load<GameObject>("prefabs/MenuSelector"));
+		Debug.Log(pointer);
 		pointer.transform.SetParent(GameObject.Find("Canvas").transform);
 		listPosition = 1;
 	}
@@ -24,7 +25,7 @@ public class MenuController : MonoBehaviour {
 	void Update () {
 		if(Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S)) {
 			int siblingIndex = currentOption.GetSiblingIndex() + 1;
-			if(siblingIndex > currentOption.transform.childCount) {
+			if(siblingIndex >= currentOption.transform.parent.childCount) {
 				siblingIndex = 0;
 			}
 			currentOption = currentOption.transform.parent.GetChild(siblingIndex);
@@ -33,12 +34,11 @@ public class MenuController : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) {
 			int siblingIndex = currentOption.GetSiblingIndex() - 1;
 			if(siblingIndex < 0) {
-				siblingIndex = currentOption.transform.childCount - 1;
+				siblingIndex = currentOption.transform.parent.childCount - 1;
 			}
 			currentOption = currentOption.transform.parent.GetChild(siblingIndex);
 		}
 		if(Input.GetKeyDown(KeyCode.Space)) {
-			Debug.Log(currentOption.name);
 			currentOption.GetComponent<MenuActionScript>().Activate();
 		}
 		UpdatePosition();

@@ -3,5 +3,6 @@
  <List>
  		<Action>MoveRight</Action>
  		<Action>Jump</Action>
+ 		<Action>MoveLeft</Action>
  </List>
 </Root>
