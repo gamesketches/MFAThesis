@@ -39,7 +39,13 @@ public class MenuController : MonoBehaviour {
 			currentOption = currentOption.transform.parent.GetChild(siblingIndex);
 		}
 		if(Input.GetKeyDown(KeyCode.Space)) {
-			currentOption.GetComponent<MenuActionScript>().Activate();
+			MenuActionScript actionScript = currentOption.GetComponent<MenuActionScript>();
+			actionScript.Activate();
+			if(actionScript.listOption) {
+				currentOptionList = currentOption.transform.GetChild(1).GetComponentsInChildren<Transform>();
+				listPosition = 1;
+				currentOption = currentOptionList[listPosition];
+			}
 		}
 		UpdatePosition();
 	}

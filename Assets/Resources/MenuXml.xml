@@ -1,8 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <Root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
- <List>
+ <List name="Actions">
  		<Action>MoveRight</Action>
  		<Action>Jump</Action>
  		<Action>MoveLeft</Action>
+ 		<List name="Stopping Options">
+ 			<Action>Stop</Action>
+ 		</List>
  </List>
 </Root>

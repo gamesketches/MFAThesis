@@ -39,8 +39,7 @@ public class MenuBuilder : MonoBehaviour {
 	// Update is called once per frame
 	Transform GenMenuList (XmlNode topNode, Transform parent, Vector3 position) {
 		Vector3 newPos = position;
-		newPos.x += offset.x;
-		Debug.Log(newPos);
+		//newPos.x += offset.x;
 		GameObject listOption = (GameObject)Instantiate(Resources.Load<GameObject>("prefabs/OptionList"), newPos, Quaternion.identity);
 		listOption.transform.SetParent(parent, false);
 		int numOptionsInList = 0;
@@ -52,7 +51,11 @@ public class MenuBuilder : MonoBehaviour {
 				actionOption.GetComponentInChildren<Text>().text = node.InnerText;
 			}
 			else if(node.Name == "List") {
-				GenMenuList(node, listOption.transform, newPos);
+				GameObject actionOption = (GameObject)Instantiate(Resources.Load<GameObject>("prefabs/MenuAction"), newPos, Quaternion.identity);
+				actionOption.transform.SetParent(listOption.transform, false);
+				Vector3 childPos = new Vector3(offset.x / 2, 0, 0);
+				actionOption.GetComponent<MenuActionScript>().InitializeAsList(GenMenuList(node, actionOption.transform, childPos));
+				actionOption.GetComponentInChildren<Text>().text = node.Attributes[0].Value;
 			}
 			else Debug.Log(node.InnerText);
 

@@ -8,8 +8,11 @@ public class MenuActionScript : MonoBehaviour {
 	private MethodInfo action;
 	private object actionObject;
 	private object[] parameters;
+	public bool listOption;
+	private Transform list;
 	// Use this for initialization
-	void Start () {
+	void Awake () {
+		listOption = false;
 		parameters = new object[0];
 	}
 	
@@ -24,7 +27,22 @@ public class MenuActionScript : MonoBehaviour {
 		parameters = methodParameters;
 	}
 
+	public void InitializeAsList(Transform newList) {
+		listOption = true;
+		list = newList;
+		list.gameObject.SetActive(false);
+	}
+
 	public void Activate() {
-		action.Invoke(actionObject, parameters);
+		if(listOption) {
+			list.gameObject.SetActive(true);
+		}
+		else {
+			action.Invoke(actionObject, parameters);
+		}
+	}
+
+	public void DeActivate() {
+		list.gameObject.SetActive(false);
 	}
 }

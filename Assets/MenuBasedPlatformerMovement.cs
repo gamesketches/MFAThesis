@@ -43,4 +43,8 @@ public class MenuBasedPlatformerMovement : MonoBehaviour {
 			rb.AddForce(new Vector2(0, jumpPower), ForceMode2D.Impulse);
 		}
 	}
+
+	public void Stop() {
+		movementSpeed = 0;
+	}
 }
