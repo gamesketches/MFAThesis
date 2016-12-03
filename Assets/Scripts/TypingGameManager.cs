@@ -36,21 +36,23 @@ public class TypingGameManager : MonoBehaviour {
 	Color backgroundColor;
 	Phrase currentPhrase;
 	int currentPhraseIndex;
-	float currentTime = 10;
+	float currentTime = 1;
 	AudioSource audio;
+	bool gameStarted;
 
 	HighScoreManager highScoreList;
 
 	// Use this for initialization
 	void Start () {
+		gameStarted = false;
 		highScoreList = GetComponent<HighScoreManager>();
 		backgroundColor = Camera.main.backgroundColor;
 		phrases = new Queue<Phrase>();
-		phrases.Enqueue(new Phrase("Type the letters", KeyCode.None, KeyCode.None, 30, Vector2.zero, backgroundColor));
-		phrases.Enqueue(new Phrase ("And Mind The Timer", KeyCode.None, KeyCode.None, 10, Vector2.zero, backgroundColor));
-		phrases.Enqueue(new Phrase("Blue Letters Must Be Held", KeyCode.V, KeyCode.K, 30, new Vector2(200, 0), backgroundColor));
-		phrases.Enqueue(new Phrase("He goes to school", KeyCode.A, KeyCode.M, 20, new Vector2(300, 100), Color.Lerp(backgroundColor, currentText.color, 0.6f)));
-		phrases.Enqueue(new Phrase("Burgess in both videos", KeyCode.C, KeyCode.P, 20, new Vector2(100, -300), Color.Lerp(backgroundColor, currentText.color, 0.8f)));
+		phrases.Enqueue(new Phrase("Type the letters", KeyCode.None, KeyCode.None, 14, Vector2.zero, backgroundColor));
+		phrases.Enqueue(new Phrase ("And Mind The Timer", KeyCode.None, KeyCode.None, 3, Vector2.zero, backgroundColor));
+		phrases.Enqueue(new Phrase("Blue Letters Must Be Held", KeyCode.V, KeyCode.K, 5, new Vector2(200, 0), backgroundColor));
+		phrases.Enqueue(new Phrase("He goes to school", KeyCode.A, KeyCode.M, 2, new Vector2(300, 100), Color.Lerp(backgroundColor, currentText.color, 0.6f)));
+		phrases.Enqueue(new Phrase("Burgess in both videos", KeyCode.C, KeyCode.P, 2, new Vector2(100, -300), Color.Lerp(backgroundColor, currentText.color, 0.8f)));
 		currentPhrase = phrases.Dequeue();
 		currentText.text = currentPhrase.textContent;
 		leftHoldText.text = currentPhrase.leftHeldKey.ToString();
@@ -59,12 +61,15 @@ public class TypingGameManager : MonoBehaviour {
 		currentPhraseIndex = 0;
 		audio = GetComponent<AudioSource>();
 		audio.clip = Resources.Load<AudioClip>("Sounds/TypingGame/type1");
+		timer.text = currentTime.ToString("F");
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if(!GameOver()) {
-			UpdateTimer();
+			if(gameStarted) {
+				UpdateTimer();
+			}
 			if(KeysStillHeld()) {
 				if(currentPhraseIndex < currentPhrase.textContent.Length && Input.GetKeyDown(CurrentCharacter())) {
 					UpdateTextData();
@@ -76,20 +81,25 @@ public class TypingGameManager : MonoBehaviour {
 	void UpdateTimer() {
 		currentTime -= Time.deltaTime;
 		if(currentTime < 0) {
-			Debug.Log("GAME OVER");
+			currentText.rectTransform.localPosition = Vector3.zero;
+			currentText.text = "OUT OF TIME";
+			leftHoldText.color = Camera.main.backgroundColor;
+			rightHoldText.color = Camera.main.backgroundColor;
+			timer.text = 0.ToString();
+			StartCoroutine(ResetGame());
 		}
 		else {
-			timer.text = currentTime.ToString();
+			timer.text = currentTime.ToString("F");
 		}
 	}
 
 	void UpdateTextData() {
+		gameStarted = true;
 		currentPhraseIndex += 1;
 		audio.Play();
 		foreach(GameObject text in GameObject.FindGameObjectsWithTag("finishedText")){
 			text.GetComponent<Text>().rectTransform.Translate(-offsetOnType, 0, 0);
 		}
-		//currentText.rectTransform.Translate(-offsetOnType, 0, 0);
 		if(currentPhraseIndex == currentPhrase.textContent.Length) {
 					Debug.Log("Nice!");
 					SwitchPhrase();
@@ -114,7 +124,7 @@ public class TypingGameManager : MonoBehaviour {
 		if(Input.anyKey && Input.GetKey(currentPhrase.leftHeldKey) && Input.GetKey(currentPhrase.rightHeldKey)) {
 			return true;
 		}
-		else if (currentText.text != "YOU WIN STOP TYPING"){
+		else if (currentText.text != "YOU WIN STOP TYPING" && currentText.text != "OUT OF TIME"){
 			currentPhraseIndex = 0;
 			currentText.text = currentPhrase.textContent;
 			return false;
@@ -144,11 +154,16 @@ public class TypingGameManager : MonoBehaviour {
 			if(highScoreList.MadeHighScoreList((int)float.Parse(timer.text))){
 				highScoreList.InputNewName((int)float.Parse(timer.text));
 			}
+			else {
+				StartCoroutine(ResetGame());
+			}
 		}
 	}
 
 	IEnumerator WrapUpOldPhrase() {
 		if(currentPhrase != null) {
+			currentText.text = string.Concat("<color=black>", currentPhrase.textContent, "</color>");
+	
 			float t = 0;
 			audio.clip = Resources.Load<AudioClip>("Sounds/TypingGame/slide");
 			audio.Play();
@@ -160,6 +175,7 @@ public class TypingGameManager : MonoBehaviour {
 			Text oldText = Instantiate(currentText, currentText.transform.parent) as Text;
 			oldText.rectTransform.localPosition = currentPhrase.position;
 			oldText.tag = "finishedText";
+			oldText.color = Color.black;
 		}
 		audio.clip = Resources.Load<AudioClip>("Sounds/TypingGame/type1");
 		currentPhrase = phrases.Dequeue();
@@ -191,4 +207,8 @@ public class TypingGameManager : MonoBehaviour {
 		return phrases.Count == 0 && currentPhraseIndex == currentPhrase.textContent.Length;
 	}
 
+	IEnumerator ResetGame() {
+		yield return new WaitForSeconds(4);
+		UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+	}
 }
