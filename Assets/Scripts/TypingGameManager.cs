@@ -22,8 +22,6 @@ public class TypingGameManager : MonoBehaviour {
 			position = new Vector3(newPosition.x, newPosition.y, 0);
 			myColor = newColor;
 		}
-
-
 	}
 
 	Queue<Phrase> phrases;
@@ -44,13 +42,20 @@ public class TypingGameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		gameStarted = false;
+		gameStarted = true;
 		highScoreList = GetComponent<HighScoreManager>();
 		backgroundColor = Camera.main.backgroundColor;
 		phrases = new Queue<Phrase>();
 		phrases.Enqueue(new Phrase("Type the letters", KeyCode.None, KeyCode.None, 14, Vector2.zero, backgroundColor));
-		phrases.Enqueue(new Phrase ("And Mind The Timer", KeyCode.None, KeyCode.None, 3, Vector2.zero, backgroundColor));
+		phrases.Enqueue(new Phrase ("And Mind The Timer", KeyCode.None, KeyCode.None, 5, Vector2.zero, backgroundColor));
 		phrases.Enqueue(new Phrase("Blue Letters Must Be Held", KeyCode.V, KeyCode.K, 5, new Vector2(200, 0), backgroundColor));
+		phrases.Enqueue(new Phrase("The man is also filial piety", KeyCode.W, KeyCode.V,10, Vector3.zero, backgroundColor));
+		phrases.Enqueue(new Phrase("And Good Guilty Of those who", KeyCode.R, KeyCode.P, 5, Vector3.zero, backgroundColor));
+		phrases.Enqueue(new Phrase("fresh bad guilty", KeyCode.W, KeyCode.P, 8, Vector3.zero, backgroundColor));
+		phrases.Enqueue(new Phrase("and good for chaos", KeyCode.M, KeyCode.K, 7, Vector3.zero, backgroundColor));
+		phrases.Enqueue(new Phrase("not the there", KeyCode.S, KeyCode.J, 3, Vector3.zero, backgroundColor));
+		phrases.Enqueue(new Phrase("Gentleman of this", KeyCode.X, KeyCode.R, 5, Vector3.zero, backgroundColor));
+		phrases.Enqueue(new Phrase ("the legislation and students", KeyCode.Q, KeyCode.V, 10, Vector2.zero, backgroundColor));
 		phrases.Enqueue(new Phrase("He goes to school", KeyCode.A, KeyCode.M, 2, new Vector2(300, 100), Color.Lerp(backgroundColor, currentText.color, 0.6f)));
 		phrases.Enqueue(new Phrase("Burgess in both videos", KeyCode.C, KeyCode.P, 2, new Vector2(100, -300), Color.Lerp(backgroundColor, currentText.color, 0.8f)));
 		currentPhrase = phrases.Dequeue();
