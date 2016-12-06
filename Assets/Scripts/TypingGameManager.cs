@@ -33,7 +33,7 @@ public class TypingGameManager : MonoBehaviour {
 	public Text currentText;
 	public Text leftHoldText;
 	public Text rightHoldText;
-	public Text score;
+	public Image logo;
 	public float offsetOnType;
 	Color backgroundColor;
 	Phrase currentPhrase;
@@ -50,7 +50,7 @@ public class TypingGameManager : MonoBehaviour {
 		highScoreList = GetComponent<HighScoreManager>();
 		backgroundColor = Camera.main.backgroundColor;
 		phrases = new Queue<Phrase>();
-		phrases.Enqueue(new Phrase("Type the letters", KeyCode.None, KeyCode.None, 14, Vector2.zero, backgroundColor, null));
+		phrases.Enqueue(new Phrase("Type these letters", KeyCode.None, KeyCode.None, 14, Vector2.zero, backgroundColor, null));
 		phrases.Enqueue(new Phrase ("And Mind The Timer", KeyCode.None, KeyCode.None, 5, Vector2.zero, backgroundColor, null));
 		phrases.Enqueue(new Phrase("Blue Letters Must Be Held", KeyCode.None, KeyCode.K, 5, new Vector2(200, 0), backgroundColor, null));
 		phrases.Enqueue(new Phrase("Letting go is starting over", KeyCode.None, KeyCode.J, 9, Vector2.zero, backgroundColor, null));
@@ -70,7 +70,7 @@ public class TypingGameManager : MonoBehaviour {
 		currentPhraseIndex = 0;
 		audio = GetComponent<AudioSource>();
 		audio.clip = Resources.Load<AudioClip>("Sounds/TypingGame/type1");
-		timer.text = currentTime.ToString("F");
+		timer.text = "";
 	}
 	
 	// Update is called once per frame
@@ -104,6 +104,7 @@ public class TypingGameManager : MonoBehaviour {
 
 	void UpdateTextData() {
 		gameStarted = true;
+		logo.enabled = false;
 		currentPhraseIndex += 1;
 		audio.Play();
 		foreach(GameObject text in GameObject.FindGameObjectsWithTag("finishedText")){
@@ -166,7 +167,6 @@ public class TypingGameManager : MonoBehaviour {
 	}
 
 	void SwitchPhrase() {
-		score.text = (int.Parse(score.text) + 1).ToString();
 		if(phrases.Count >= 1) {
 			StartCoroutine(WrapUpOldPhrase());
 			}
