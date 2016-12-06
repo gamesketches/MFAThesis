@@ -52,8 +52,9 @@ public class TypingGameManager : MonoBehaviour {
 		phrases = new Queue<Phrase>();
 		phrases.Enqueue(new Phrase("Type the letters", KeyCode.None, KeyCode.None, 14, Vector2.zero, backgroundColor, null));
 		phrases.Enqueue(new Phrase ("And Mind The Timer", KeyCode.None, KeyCode.None, 5, Vector2.zero, backgroundColor, null));
-		phrases.Enqueue(new Phrase("Blue Letters Must Be Held", KeyCode.V, KeyCode.K, 5, new Vector2(200, 0), backgroundColor, null));
-		phrases.Enqueue(new Phrase("Letting go is starting over", KeyCode.C, KeyCode.J, 9, Vector2.zero, backgroundColor, null));
+		phrases.Enqueue(new Phrase("Blue Letters Must Be Held", KeyCode.None, KeyCode.K, 5, new Vector2(200, 0), backgroundColor, null));
+		phrases.Enqueue(new Phrase("Letting go is starting over", KeyCode.None, KeyCode.J, 9, Vector2.zero, backgroundColor, null));
+		phrases.Enqueue(new Phrase("Now it begins", KeyCode.R, KeyCode.U, 3, Vector2.zero, backgroundColor, null));
 		phrases.Enqueue(new Phrase("The man is also filial piety", KeyCode.W, KeyCode.V,10, Vector3.zero, backgroundColor, null));
 		phrases.Enqueue(new Phrase("And Good Guilty Of those who", KeyCode.R, KeyCode.Z, 5, Vector3.zero, backgroundColor, null));
 		phrases.Enqueue(new Phrase("fresh bad guilty", KeyCode.X, KeyCode.P, 8, Vector3.zero, backgroundColor, null));
@@ -120,16 +121,23 @@ public class TypingGameManager : MonoBehaviour {
 	}
 
 	bool KeysStillHeld() {
-		if(currentPhrase.leftHeldKey == KeyCode.None && currentPhrase.rightHeldKey == KeyCode.None) {
-			Color backgroundColor = new Color(247 / 255f, 248 / 255f, 233 / 255f);
-			leftHoldText.color = backgroundColor;
-			rightHoldText.color = backgroundColor;
-			return true;
-		}
 		Color heldKeyColor = new Color(95f / 255f , 103f / 255f, 253f / 255f);
 		leftHoldText.color = Input.GetKey(currentPhrase.leftHeldKey) ? Color.yellow : heldKeyColor;
 		rightHoldText.color = Input.GetKey(currentPhrase.rightHeldKey) ? Color.yellow : heldKeyColor;
-		if(Input.anyKey && Input.GetKey(currentPhrase.leftHeldKey) && Input.GetKey(currentPhrase.rightHeldKey)) {
+
+		Color backgroundColor = new Color(247 / 255f, 248 / 255f, 233 / 255f);
+		if(currentPhrase.leftHeldKey == KeyCode.None){
+			leftHoldText.color = backgroundColor; 
+		}
+		if(currentPhrase.rightHeldKey == KeyCode.None) {
+			rightHoldText.color = backgroundColor;
+		}
+
+		if(currentPhrase.leftHeldKey == currentPhrase.rightHeldKey) {
+			return true;
+		}
+
+		if(Input.anyKey && KeyHeld(currentPhrase.leftHeldKey) && KeyHeld(currentPhrase.rightHeldKey)) {
 			return true;
 		}
 		else if (currentText.text != "YOU WIN STOP TYPING" && currentText.text != "OUT OF TIME"){
@@ -138,10 +146,18 @@ public class TypingGameManager : MonoBehaviour {
 			return false;
 		}
 		else {
-			Color backgroundColor = new Color(247 / 255f, 248 / 255f, 233 / 255);
 			leftHoldText.color = backgroundColor;
 			rightHoldText.color = backgroundColor;
 			return true;
+		}
+	}
+
+	bool KeyHeld(KeyCode inputKey) {
+		if(inputKey == KeyCode.None || Input.GetKey(inputKey)) {
+			return true;
+		}
+		else {
+			return false;
 		}
 	}
 
