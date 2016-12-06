@@ -1,11 +1,29 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <Root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
  <List name="Actions">
- 		<Action>MoveRight</Action>
- 		<Action>Jump</Action>
- 		<Action>MoveLeft</Action>
- 		<List name="Stopping Options">
+ 		<List name="Move">
+ 			<List name="Walk">
+ 				<Action>Forward</Action>
+ 				<Action>Back</Action>
+ 				<Action>Turn</Action>
+ 			</List>
  			<Action>Stop</Action>
+ 		</List>
+ 		<List name="Jump">
+ 			<Action>Jump</Action>
+ 			<Action>Hop</Action>
+ 		</List>
+ 		<List name="Attack">
+ 			<Action>High</Action>
+ 			<Action>Middle</Action>
+ 			<Action>Low</Action>
+ 		</List>
+ 		<List name="Item">
+ 			<List name="Potion">
+ 				<Action>Fast</Action>
+ 				<Action>Medium</Action>
+ 				<Action>Slow</Action>
+ 			</List>
  		</List>
  </List>
 </Root>

@@ -8,8 +8,10 @@ public class MenuBasedPlatformerMovement : MonoBehaviour {
 	public float jumpPower;
 	public float speed;
 	private float movementSpeed;
+	private int direction;
 	// Use this for initialization
 	void Start () {
+		direction = 1;
 		animator = GetComponent<Animator>();
 		rb = GetComponent<Rigidbody2D>();
 		movementSpeed = 0;
@@ -19,7 +21,7 @@ public class MenuBasedPlatformerMovement : MonoBehaviour {
 	void Update () {
 		float vert = Input.GetAxis("Jump");
 			animator.SetInteger("movement", 1);
-			transform.Translate(movementSpeed * speed * Time.deltaTime, 0, 0);
+			transform.Translate(movementSpeed * speed * Time.deltaTime * direction, 0, 0);
 
 			animator.SetInteger("movement", 0);
 		if(!animator.GetBool("grounded")) {
@@ -29,12 +31,20 @@ public class MenuBasedPlatformerMovement : MonoBehaviour {
 		}
 	}
 
-	public void MoveRight() {
+	public void Forward() {
 		movementSpeed = 1;
 	}
 
-	public void MoveLeft() {
+	public void Back() {
 		movementSpeed = -1;
+	}
+
+	public void Turn() {
+		direction *= -1;
+	}
+
+	public void Stop() {
+		movementSpeed = 0;
 	}
 
 	public void Jump() {
@@ -44,7 +54,33 @@ public class MenuBasedPlatformerMovement : MonoBehaviour {
 		}
 	}
 
-	public void Stop() {
-		movementSpeed = 0;
+	public void Hop() {
+		if(animator.GetBool("grounded")) {
+			animator.SetBool("grounded", false);
+			rb.AddForce(new Vector2(0, jumpPower / 2), ForceMode2D.Impulse);
+		}
+	}
+
+	public void High() {
+		GameObject AttackHitBox = (GameObject)Instantiate(Resources.Load<GameObject>("prefabs/AttackHitBox"), transform.position, Quaternion.identity);
+		AttackHitBox.transform.position += new Vector3(1, 1, 0);
+		StartCoroutine(ManageAttackHitBox(AttackHitBox));
+	}
+
+	public void Middle() {
+		GameObject AttackHitBox = (GameObject)Instantiate(Resources.Load<GameObject>("prefabs/AttackHitBox"), transform.position, Quaternion.identity);
+		StartCoroutine(ManageAttackHitBox(AttackHitBox));
+	}
+
+	public void Low() {
+		GameObject AttackHitBox = (GameObject)Instantiate(Resources.Load<GameObject>("prefabs/AttackHitBox"), transform.position, Quaternion.identity);
+		AttackHitBox.transform.position += new Vector3(1, -1, 0);
+		StartCoroutine(ManageAttackHitBox(AttackHitBox));
+	}
+
+
+	IEnumerator ManageAttackHitBox(GameObject attack) {
+		yield return new WaitForSeconds(1);
+		Destroy(attack);
 	}
 }

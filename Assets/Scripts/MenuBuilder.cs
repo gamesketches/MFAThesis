@@ -13,6 +13,7 @@ public class MenuBuilder : MonoBehaviour {
 	Vector3 offset;
 	Type playerType;
 	MenuController pointer;
+	public Vector3 startPosition;
 
 	// Use this for initialization
 	void Start () {
@@ -31,7 +32,8 @@ public class MenuBuilder : MonoBehaviour {
 
 		pointer = GetComponent<MenuController>();
 
-		pointer.Initialize(GenMenuList(topNode, transform, new Vector3(0, 0, 0)));
+
+		pointer.Initialize(GenMenuList(topNode, transform, startPosition));
 
 
 	}
