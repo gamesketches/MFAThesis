@@ -193,6 +193,11 @@ public class TypingGameManager : MonoBehaviour {
 			currentText.text = string.Concat("<color=black>", currentPhrase.textContent, "</color>");
 	
 			float t = 0;
+			Phrase nextPhrase = phrases.Peek();
+			currentPhrase.leftHeldKey = nextPhrase.leftHeldKey;
+			currentPhrase.rightHeldKey = nextPhrase.rightHeldKey;
+			leftHoldText.text = currentPhrase.leftHeldKey.ToString();
+			rightHoldText.text = currentPhrase.rightHeldKey.ToString();
 			audio.clip = Resources.Load<AudioClip>("Sounds/TypingGame/slide");
 			audio.Play();
 			Vector3 offset = currentPhrase.position - currentText.rectTransform.localPosition;
