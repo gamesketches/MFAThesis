@@ -34,6 +34,7 @@ public class TypingGameManager : MonoBehaviour {
 	public Text leftHoldText;
 	public Text rightHoldText;
 	public Image logo;
+	public Text logoText;
 	public float offsetOnType;
 	Color backgroundColor;
 	Phrase currentPhrase;
@@ -64,6 +65,7 @@ public class TypingGameManager : MonoBehaviour {
 		phrases.Enqueue(new Phrase ("the legislation and students", KeyCode.Q, KeyCode.V, 10, Vector2.zero, backgroundColor, null));
 		currentPhrase = phrases.Dequeue();
 		currentText.text = currentPhrase.textContent;
+		currentText.enabled = false;
 		leftHoldText.text = currentPhrase.leftHeldKey.ToString();
 		rightHoldText.text = currentPhrase.rightHeldKey.ToString();
 		currentTime += currentPhrase.timeBonus;
@@ -105,6 +107,8 @@ public class TypingGameManager : MonoBehaviour {
 	void UpdateTextData() {
 		gameStarted = true;
 		logo.enabled = false;
+		logoText.enabled = false;
+		currentText.enabled = true;
 		currentPhraseIndex += 1;
 		audio.Play();
 		foreach(GameObject text in GameObject.FindGameObjectsWithTag("finishedText")){
