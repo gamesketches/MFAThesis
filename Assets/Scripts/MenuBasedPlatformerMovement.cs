@@ -19,11 +19,8 @@ public class MenuBasedPlatformerMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		float vert = Input.GetAxis("Jump");
-			animator.SetInteger("movement", 1);
+			animator.SetInteger("movement", (int)movementSpeed);
 			transform.Translate(movementSpeed * speed * Time.deltaTime * direction, 0, 0);
-
-			animator.SetInteger("movement", 0);
 		if(!animator.GetBool("grounded")) {
 			if(rb.velocity.y == 0) {
 				animator.SetBool("grounded", true);
@@ -41,6 +38,8 @@ public class MenuBasedPlatformerMovement : MonoBehaviour {
 
 	public void Turn() {
 		direction *= -1;
+		SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+		renderer.flipX = !renderer.flipX;
 	}
 
 	public void Stop() {
