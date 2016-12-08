@@ -8,16 +8,16 @@ public class HighScoreManager : MonoBehaviour {
 
 	public class Entry {
 		public string name;
-		public int score;
+		public float score;
 
-		public Entry(string newName, int newScore) {
+		public Entry(string newName, float newScore) {
 			name = newName;
 			score = newScore;
 		}
 
 		public string GetEntry() {
 			if(score != 0) {
-				return string.Concat(name, " ", score.ToString());
+				return string.Concat(name, " ", score.ToString("F"));
 			}
 			else {
 				return string.Concat(name, " ----");
@@ -34,11 +34,12 @@ public class HighScoreManager : MonoBehaviour {
 	public List<Entry> entries;
 	private string HighScoreHeader;
 	private string nameEntry;
-	private int scoreEntry;
+	private float scoreEntry;
 	bool enteringScore;
 
 	// Use this for initialization
 	void Start () {
+		ClearLeaderBoard();
 		enteringScore = false;
 		HighScoreHeader = SceneManager.GetActiveScene().name + "HighScore";
 		entries = new List<Entry>();
@@ -46,7 +47,7 @@ public class HighScoreManager : MonoBehaviour {
 		for(int i = 0; i < numEntries; i++) {
 			key = HighScoreHeader + i.ToString();
 			if(PlayerPrefs.HasKey(key + "score")) {
-				entries.Add(new Entry(PlayerPrefs.GetString(key + "name"), PlayerPrefs.GetInt(key + "score")));
+				entries.Add(new Entry(PlayerPrefs.GetString(key + "name"), PlayerPrefs.GetFloat(key + "score")));
 			}
 			else {
 				entries.Add(new Entry("Sam", 0));
@@ -61,8 +62,12 @@ public class HighScoreManager : MonoBehaviour {
 				enteringScore = false;
 				StartCoroutine(DisplayAndReset());
 			}
+			else if(Input.GetKeyDown(KeyCode.Backspace)) {
+				nameEntry = nameEntry.Substring(0, nameEntry.Length - 1);
+				HighScoreDisplay.text = "Fast Time!\n Enter Your name:\n " + nameEntry;
+			}
 			else {
-				HighScoreDisplay.text = "ENTER YOUR NAME\n " + nameEntry;
+				HighScoreDisplay.text = "Fast Time!\n Enter Your name:\n " + nameEntry;
 				nameEntry = string.Concat(nameEntry, Input.inputString);
 			}
 		}
@@ -73,12 +78,12 @@ public class HighScoreManager : MonoBehaviour {
 		for(int i = 0; i < numEntries; i++) {
 			key = HighScoreHeader + i.ToString();
 			PlayerPrefs.SetString(key + "name", entries[i].name);
-			PlayerPrefs.SetInt(key + "score", entries[i].score);
+			PlayerPrefs.SetFloat(key + "score", entries[i].score);
 		}
 	}
 
 	public void PrintScores() {
-		string scoreList = "";
+		string scoreList = "High Scores:\n";
 		foreach(Entry entry in entries) {
 			scoreList = string.Concat(scoreList, entry.GetEntry(), "\n");
 		}
@@ -103,7 +108,7 @@ public class HighScoreManager : MonoBehaviour {
 		return score > entries[numEntries -1].score;
 	}
 
-	public void CreateNewEntry(string name, int score) {
+	public void CreateNewEntry(string name, float score) {
 		Entry newChallenger = new Entry(name, score);
 		for(int i = 0; i < entries.Count; i++) {
 			if(entries[i].score < newChallenger.score) {
@@ -115,9 +120,14 @@ public class HighScoreManager : MonoBehaviour {
 		entries.Remove(entries[numEntries]);
 	}
 
-	public void InputNewName(int score) {
-		enteringScore = true;
+	public void InputNewName(float score) {
 		scoreEntry = score;
+		StartCoroutine(DelayInputOneFrame());
+	}
+
+	IEnumerator DelayInputOneFrame() {
+		yield return null;
+		enteringScore = true;
 	}
 
 	IEnumerator DisplayAndReset() {

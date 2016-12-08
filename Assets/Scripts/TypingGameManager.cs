@@ -53,7 +53,7 @@ public class TypingGameManager : MonoBehaviour {
 		phrases = new Queue<Phrase>();
 		phrases.Enqueue(new Phrase("Type these letters", KeyCode.None, KeyCode.None, 14, Vector2.zero, backgroundColor, null));
 		phrases.Enqueue(new Phrase ("And Mind The Timer", KeyCode.None, KeyCode.None, 4, Vector2.zero, backgroundColor, null));
-		phrases.Enqueue(new Phrase("Blue Letters Must Be Held", KeyCode.None, KeyCode.K, 4, new Vector2(200, 0), backgroundColor, null));
+		/*phrases.Enqueue(new Phrase("Blue Letters Must Be Held", KeyCode.None, KeyCode.K, 4, new Vector2(200, 0), backgroundColor, null));
 		phrases.Enqueue(new Phrase("Letting go is starting over", KeyCode.None, KeyCode.J, 8, Vector2.zero, backgroundColor, null));
 		phrases.Enqueue(new Phrase("Now it begins", KeyCode.R, KeyCode.U, 2, Vector2.zero, backgroundColor, null));
 		phrases.Enqueue(new Phrase("The man is also filial piety", KeyCode.W, KeyCode.V,9, Vector3.zero, backgroundColor, null));
@@ -62,7 +62,7 @@ public class TypingGameManager : MonoBehaviour {
 		phrases.Enqueue(new Phrase("and good for chaos", KeyCode.M, KeyCode.K, 6, Vector3.zero, backgroundColor, null));
 		phrases.Enqueue(new Phrase("not the there", KeyCode.S, KeyCode.J, 2, Vector3.zero, backgroundColor, null));
 		phrases.Enqueue(new Phrase("Gentleman of this", KeyCode.X, KeyCode.R, 4, Vector3.zero, backgroundColor, null));
-		phrases.Enqueue(new Phrase ("the legislation and students", KeyCode.Q, KeyCode.V, 9, Vector2.zero, backgroundColor, null));
+		phrases.Enqueue(new Phrase ("the legislation and students", KeyCode.Q, KeyCode.V, 9, Vector2.zero, backgroundColor, null));*/
 		currentPhrase = phrases.Dequeue();
 		currentText.text = currentPhrase.textContent;
 		currentText.enabled = false;
@@ -176,13 +176,18 @@ public class TypingGameManager : MonoBehaviour {
 			}
 		else {
 			currentText.rectTransform.localPosition = Vector3.zero;
-			currentText.text = "YOU WIN STOP TYPING";
 			leftHoldText.color = Camera.main.backgroundColor;
 			rightHoldText.color = Camera.main.backgroundColor;
 			if(highScoreList.MadeHighScoreList((int)float.Parse(timer.text))){
-				highScoreList.InputNewName((int)float.Parse(timer.text));
+				foreach(GameObject text in GameObject.FindGameObjectsWithTag("finishedText")) {
+					text.SetActive(false);
+					currentText.enabled = false;
+				}
+				highScoreList.InputNewName(float.Parse(timer.text));
 			}
 			else {
+
+				currentText.text = "<color=blue>YOU WIN STOP TYPING.\n Now go For a high score!</color>";
 				StartCoroutine(ResetGame());
 			}
 		}
@@ -204,7 +209,10 @@ public class TypingGameManager : MonoBehaviour {
 				StartCoroutine(MoveText(text.GetComponent<Text>(), offset));
 			}
 			gameStarted = false;
+			timer.color = new Color(101f / 255f, 255f / 255f, 140f / 255f);
+			StartCoroutine(AddTime(nextPhrase.timeBonus));
 			yield return StartCoroutine(MoveText(currentText, offset));
+			timer.color = new Color(255f / 255f, 101f / 255f, 112f/ 255f);
 			gameStarted = true;
 			Text oldText = Instantiate(currentText, currentText.transform.parent) as Text;
 			oldText.rectTransform.localPosition = currentPhrase.position;
@@ -216,7 +224,7 @@ public class TypingGameManager : MonoBehaviour {
 		currentText.text = currentPhrase.textContent;
 		leftHoldText.text = currentPhrase.leftHeldKey.ToString();
 		rightHoldText.text = currentPhrase.rightHeldKey.ToString();
-		currentTime += currentPhrase.timeBonus;
+		//currentTime += currentPhrase.timeBonus;
 		currentPhraseIndex = 0;
 		Camera.main.backgroundColor = currentPhrase.myColor;
 		currentText.rectTransform.localPosition = currentPhrase.position + new Vector3(0, -200, 0);
@@ -237,6 +245,18 @@ public class TypingGameManager : MonoBehaviour {
 		}
 	}
 
+	IEnumerator AddTime(float timeBonus) {
+		float t = 0;
+		float startTime = currentTime;
+		float endTime = currentTime + timeBonus; 
+		while(t < 1) {
+			currentTime = Mathf.Lerp(startTime, endTime, t);
+			timer.text = currentTime.ToString("F");
+			t += Time.deltaTime;
+			yield return null;
+		}
+	}
+
 	bool GameOver() {
 		return phrases.Count == 0 && currentPhraseIndex == currentPhrase.textContent.Length;
 	}
@@ -244,5 +264,9 @@ public class TypingGameManager : MonoBehaviour {
 	IEnumerator ResetGame() {
 		yield return new WaitForSeconds(4);
 		UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+	}
+
+	void ChangeFontNewYork() {
+		
 	}
 }
