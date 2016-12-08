@@ -53,7 +53,7 @@ public class TypingGameManager : MonoBehaviour {
 		phrases = new Queue<Phrase>();
 		phrases.Enqueue(new Phrase("Type these letters", KeyCode.None, KeyCode.None, 14, Vector2.zero, backgroundColor, null));
 		phrases.Enqueue(new Phrase ("And Mind The Timer", KeyCode.None, KeyCode.None, 4, Vector2.zero, backgroundColor, null));
-		/*phrases.Enqueue(new Phrase("Blue Letters Must Be Held", KeyCode.None, KeyCode.K, 4, new Vector2(200, 0), backgroundColor, null));
+		phrases.Enqueue(new Phrase("Blue Letters Must Be Held", KeyCode.None, KeyCode.K, 4, new Vector2(200, 0), backgroundColor, null));
 		phrases.Enqueue(new Phrase("Letting go is starting over", KeyCode.None, KeyCode.J, 8, Vector2.zero, backgroundColor, null));
 		phrases.Enqueue(new Phrase("Now it begins", KeyCode.R, KeyCode.U, 2, Vector2.zero, backgroundColor, null));
 		phrases.Enqueue(new Phrase("The man is also filial piety", KeyCode.W, KeyCode.V,9, Vector3.zero, backgroundColor, null));
@@ -62,7 +62,7 @@ public class TypingGameManager : MonoBehaviour {
 		phrases.Enqueue(new Phrase("and good for chaos", KeyCode.M, KeyCode.K, 6, Vector3.zero, backgroundColor, null));
 		phrases.Enqueue(new Phrase("not the there", KeyCode.S, KeyCode.J, 2, Vector3.zero, backgroundColor, null));
 		phrases.Enqueue(new Phrase("Gentleman of this", KeyCode.X, KeyCode.R, 4, Vector3.zero, backgroundColor, null));
-		phrases.Enqueue(new Phrase ("the legislation and students", KeyCode.Q, KeyCode.V, 9, Vector2.zero, backgroundColor, null));*/
+		phrases.Enqueue(new Phrase ("the legislation and students", KeyCode.Q, KeyCode.V, 9, Vector2.zero, backgroundColor, null));
 		currentPhrase = phrases.Dequeue();
 		currentText.text = currentPhrase.textContent;
 		currentText.enabled = false;

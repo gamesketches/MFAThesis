@@ -10,7 +10,6 @@ public class MenuController : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		pointer = (GameObject)Instantiate(Resources.Load<GameObject>("prefabs/MenuSelector"));
-		pointer.transform.SetParent(GameObject.Find("Canvas").transform);
 		listPosition = 1;
 	}
 
@@ -18,6 +17,7 @@ public class MenuController : MonoBehaviour {
 		currentOptionList = optionList.GetComponentsInChildren<Transform>();
 		currentOption = currentOptionList[listPosition];
 		pointer.transform.position = currentOption.position - new Vector3(230, 0, 0);
+		pointer.transform.SetParent(GameObject.Find("Canvas").transform);
 	}
 	
 	// Update is called once per frame
