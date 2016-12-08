@@ -191,7 +191,6 @@ public class TypingGameManager : MonoBehaviour {
 	IEnumerator WrapUpOldPhrase() {
 		if(currentPhrase != null) {
 			currentText.text = string.Concat("<color=black>", currentPhrase.textContent, "</color>");
-	
 			float t = 0;
 			Phrase nextPhrase = phrases.Peek();
 			currentPhrase.leftHeldKey = nextPhrase.leftHeldKey;
@@ -204,7 +203,9 @@ public class TypingGameManager : MonoBehaviour {
 			foreach(GameObject text in GameObject.FindGameObjectsWithTag("finishedText")) {
 				StartCoroutine(MoveText(text.GetComponent<Text>(), offset));
 			}
+			gameStarted = false;
 			yield return StartCoroutine(MoveText(currentText, offset));
+			gameStarted = true;
 			Text oldText = Instantiate(currentText, currentText.transform.parent) as Text;
 			oldText.rectTransform.localPosition = currentPhrase.position;
 			oldText.tag = "finishedText";
