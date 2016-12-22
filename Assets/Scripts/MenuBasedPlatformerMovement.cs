@@ -3,6 +3,7 @@ using System.Collections;
 
 public class MenuBasedPlatformerMovement : MonoBehaviour {
 
+	private enum AttackType {Neutral, Low, Mid, High};
 	Rigidbody2D rb;
 	Animator animator;
 	public float jumpPower;
@@ -61,17 +62,20 @@ public class MenuBasedPlatformerMovement : MonoBehaviour {
 	}
 
 	public void High() {
+		animator.SetInteger("attacking", (int)AttackType.High);
 		GameObject AttackHitBox = (GameObject)Instantiate(Resources.Load<GameObject>("prefabs/AttackHitBox"), transform.position, Quaternion.identity);
 		AttackHitBox.transform.position += new Vector3(1, 1, 0);
 		StartCoroutine(ManageAttackHitBox(AttackHitBox));
 	}
 
 	public void Middle() {
+		animator.SetInteger("attacking", (int)AttackType.Mid);
 		GameObject AttackHitBox = (GameObject)Instantiate(Resources.Load<GameObject>("prefabs/AttackHitBox"), transform.position, Quaternion.identity);
 		StartCoroutine(ManageAttackHitBox(AttackHitBox));
 	}
 
 	public void Low() {
+		animator.SetInteger("attacking", (int)AttackType.Low);
 		GameObject AttackHitBox = (GameObject)Instantiate(Resources.Load<GameObject>("prefabs/AttackHitBox"), transform.position, Quaternion.identity);
 		AttackHitBox.transform.position += new Vector3(1, -1, 0);
 		StartCoroutine(ManageAttackHitBox(AttackHitBox));
@@ -81,5 +85,7 @@ public class MenuBasedPlatformerMovement : MonoBehaviour {
 	IEnumerator ManageAttackHitBox(GameObject attack) {
 		yield return new WaitForSeconds(1);
 		Destroy(attack);
+
+		animator.SetInteger("attacking", (int)AttackType.Neutral);
 	}
 }
