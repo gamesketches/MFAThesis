@@ -24,6 +24,8 @@ public class RoomExit : MonoBehaviour {
 				return;
 			} 
 		}
+
+		other.gameObject.GetComponent<MappedController>().RemappControls(dir);
 		StartCoroutine(RoomTransition(other.gameObject));
 	}
 
@@ -68,6 +70,5 @@ public class RoomExit : MonoBehaviour {
 			t += Time.deltaTime;
 			yield return null;
 		}
-		player.GetComponent<MappedController>().RemappControls(dir);
 	}
 }
