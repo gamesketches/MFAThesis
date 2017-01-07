@@ -55,7 +55,7 @@ public class RoomExit : MonoBehaviour {
 		while(t < 1) {
 			Camera.main.transform.position = Vector3.Lerp(startPos, targetPos, t);
 			Camera.main.transform.rotation = Quaternion.Lerp(Quaternion.identity, targetRotation, t);
-			Camera.main.fieldOfView = Mathf.Lerp(60, 1, t);
+			Camera.main.fieldOfView = Mathf.Lerp(60, 1, t / 2);
 			t += Time.deltaTime;
 			yield return null;
 		}
