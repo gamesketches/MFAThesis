@@ -19,9 +19,7 @@ public class MenuBuilder : MonoBehaviour {
 	void Start () {
 		RectTransform rect = Resources.Load<GameObject>("prefabs/MenuAction").GetComponent<RectTransform>();
 		offset = new Vector3(rect.rect.width, rect.rect.height, 0);
-		Debug.Log(offset);
 		player = GameObject.FindGameObjectWithTag("Player").GetComponent<MenuBasedPlatformerMovement>();
-		Debug.Log(player);
 		TextAsset menuData = Resources.Load("MenuXML") as TextAsset;
 
 		playerType = Type.GetType("MenuBasedPlatformerMovement");
@@ -34,7 +32,6 @@ public class MenuBuilder : MonoBehaviour {
 
 
 		pointer.Initialize(GenMenuList(topNode, transform, startPosition));
-
 
 	}
 	

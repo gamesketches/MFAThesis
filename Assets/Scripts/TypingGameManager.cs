@@ -40,7 +40,7 @@ public class TypingGameManager : MonoBehaviour {
 	Phrase currentPhrase;
 	int currentPhraseIndex;
 	float currentTime = 1;
-	AudioSource audio;
+	AudioSource audioSource;
 	bool gameStarted;
 
 	HighScoreManager highScoreList;
@@ -70,8 +70,8 @@ public class TypingGameManager : MonoBehaviour {
 		rightHoldText.text = currentPhrase.rightHeldKey.ToString();
 		currentTime += currentPhrase.timeBonus;
 		currentPhraseIndex = 0;
-		audio = GetComponent<AudioSource>();
-		audio.clip = Resources.Load<AudioClip>("Sounds/TypingGame/type1");
+		audioSource = GetComponent<AudioSource>();
+		audioSource.clip = Resources.Load<AudioClip>("Sounds/TypingGame/type1");
 		timer.text = "";
 	}
 	
@@ -110,7 +110,7 @@ public class TypingGameManager : MonoBehaviour {
 		logoText.enabled = false;
 		currentText.enabled = true;
 		currentPhraseIndex += 1;
-		audio.Play();
+		audioSource.Play();
 		foreach(GameObject text in GameObject.FindGameObjectsWithTag("finishedText")){
 			text.GetComponent<Text>().rectTransform.Translate(-offsetOnType, 0, 0);
 		}
@@ -196,14 +196,13 @@ public class TypingGameManager : MonoBehaviour {
 	IEnumerator WrapUpOldPhrase() {
 		if(currentPhrase != null) {
 			currentText.text = string.Concat("<color=black>", currentPhrase.textContent, "</color>");
-			float t = 0;
 			Phrase nextPhrase = phrases.Peek();
 			currentPhrase.leftHeldKey = nextPhrase.leftHeldKey;
 			currentPhrase.rightHeldKey = nextPhrase.rightHeldKey;
 			leftHoldText.text = currentPhrase.leftHeldKey.ToString();
 			rightHoldText.text = currentPhrase.rightHeldKey.ToString();
-			audio.clip = Resources.Load<AudioClip>("Sounds/TypingGame/slide");
-			audio.Play();
+			audioSource.clip = Resources.Load<AudioClip>("Sounds/TypingGame/slide");
+			audioSource.Play();
 			Vector3 offset = currentPhrase.position - currentText.rectTransform.localPosition;
 			foreach(GameObject text in GameObject.FindGameObjectsWithTag("finishedText")) {
 				StartCoroutine(MoveText(text.GetComponent<Text>(), offset));
@@ -219,7 +218,7 @@ public class TypingGameManager : MonoBehaviour {
 			oldText.tag = "finishedText";
 			oldText.color = Color.black;
 		}
-		audio.clip = Resources.Load<AudioClip>("Sounds/TypingGame/type1");
+		audioSource.clip = Resources.Load<AudioClip>("Sounds/TypingGame/type1");
 		currentPhrase = phrases.Dequeue();
 		currentText.text = currentPhrase.textContent;
 		leftHoldText.text = currentPhrase.leftHeldKey.ToString();

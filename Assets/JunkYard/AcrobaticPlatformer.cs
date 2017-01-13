@@ -12,18 +12,14 @@ public class AcrobaticPlatformer : MonoBehaviour {
 	public bool wallCling;
 	public float freezeTime;
 	public float noiseLimit;
-	bool restarting;
-	MicInput mic;
-	AudioSource audio;
+	AudioSource audioSource;
 	// Use this for initialization
 	void Start () {
-		restarting = false;
 		wallCling = false;
 		animator = GetComponent<Animator>();
 		rb = GetComponent<Rigidbody2D>();
 		renderer = GetComponent<SpriteRenderer>();
-		mic = GetComponent<MicInput>();
-		audio = GetComponent<AudioSource>();
+		audioSource = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -72,8 +68,8 @@ public class AcrobaticPlatformer : MonoBehaviour {
 	}
 
 	IEnumerator DeathFreeze() {
-		if(!audio.isPlaying) {
-		audio.Play();
+		if(!audioSource.isPlaying) {
+		audioSource.Play();
 		}
 		float startTime = Time.realtimeSinceStartup;
 		Time.timeScale = 0;

@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
+using System;
 
 public class MenuController : MonoBehaviour {
 
@@ -18,6 +20,35 @@ public class MenuController : MonoBehaviour {
 		currentOption = currentOptionList[listPosition];
 		pointer.transform.position = currentOption.position - new Vector3(230, 0, 0);
 		pointer.transform.SetParent(GameObject.Find("Canvas").transform);
+		AddNode(new string[] {"Move", "Walk"});
+	}
+
+	public void ClearOptionList() {
+		foreach(Transform option in currentOptionList) {
+			Destroy(option.gameObject);
+		}
+	}
+
+	void AddNode(string[] optionTree) {
+		Transform targetList = currentOption.root;
+		Text[] texts = currentOption.root.GetComponentsInChildren<Text>();
+		for(int i = 0; i < optionTree.Length; i++) {
+			foreach(Text option in texts) {
+				if(option.text == optionTree[i]){
+					targetList = option.transform.parent.GetChild(1);
+					targetList.parent.GetComponent<MenuActionScript>().Activate();
+					texts = targetList.GetComponentsInChildren<Text>();
+					targetList.parent.GetComponent<MenuActionScript>().DeActivate();
+					break;
+				}
+			}
+		}
+		MenuBasedPlatformerMovement player = GameObject.FindGameObjectWithTag("Player").GetComponent<MenuBasedPlatformerMovement>();
+		Type playerType = Type.GetType("MenuBasedPlatformerMovement");
+		GameObject actionOption = (GameObject)Instantiate(Resources.Load<GameObject>("prefabs/MenuAction"), currentOption.transform.position + new Vector3(0, 100, 0), Quaternion.identity);
+		actionOption.transform.SetParent(targetList, false);
+		actionOption.GetComponent<MenuActionScript>().Initialize(playerType.GetMethod("PrintTest"), player);
+		actionOption.GetComponentInChildren<Text>().text = "hi";
 	}
 	
 	// Update is called once per frame

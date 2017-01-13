@@ -57,7 +57,6 @@ public class RandomJump : MonoBehaviour {
 	IEnumerator Jump(){
 		float t = 0;
 		jumping = true;
-		float startingY = transform.position.y;
 		while(t < 1) {
 			if(!jumping) {
 				break;

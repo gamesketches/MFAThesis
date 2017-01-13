@@ -9,9 +9,6 @@ public class MenuPlatformerEnemy : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		if(myType == null) {
-			myType = EnemyType.Mid;
-		}
 		if(myType == EnemyType.Air) {
 			GetComponent<Rigidbody2D>().gravityScale = 0;
 		}

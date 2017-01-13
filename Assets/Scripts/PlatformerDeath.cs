@@ -5,19 +5,19 @@ using UnityEngine.SceneManagement;
 public class PlatformerDeath : MonoBehaviour {
 
 	public float freezeTime;
-	AudioSource audio;
+	AudioSource audioSource;
 	// Use this for initialization
 	void Start () {
-		audio = GetComponent<AudioSource>();
-		if(freezeTime < audio.clip.length) {
-			freezeTime = audio.clip.length;
+		audioSource = GetComponent<AudioSource>();
+		if(freezeTime < audioSource.clip.length) {
+			freezeTime = audioSource.clip.length;
 		}
 	}
 	
 	// Update is called once per frame
 	void OnTriggerEnter2D (Collider2D other) {
 		if(other.tag == "Player") {
-			audio.Play();
+			audioSource.Play();
 			StartCoroutine(DeathFreeze());
 		}
 	}

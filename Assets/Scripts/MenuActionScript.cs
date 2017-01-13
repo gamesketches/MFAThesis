@@ -45,4 +45,5 @@ public class MenuActionScript : MonoBehaviour {
 	public void DeActivate() {
 		list.gameObject.SetActive(false);
 	}
+
 }

@@ -88,4 +88,8 @@ public class MenuBasedPlatformerMovement : MonoBehaviour {
 
 		animator.SetInteger("attacking", (int)AttackType.Neutral);
 	}
+
+	public void PrintTest() {
+		Debug.Log("The test worked");
+	}
 }
