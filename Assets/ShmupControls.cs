@@ -7,6 +7,7 @@ public class ShmupControls : MonoBehaviour {
 	public float attackTime;
 	private float attackTimer = 0;
 	private ShmupEnemyBehavior caughtEnemy;
+	private GameObject daJuice = null;
 	// Use this for initialization
 	void Start () {
 	
@@ -22,6 +23,15 @@ public class ShmupControls : MonoBehaviour {
 			if(caughtEnemy) {
 				if(caughtEnemy.Squeeze() < 0.1) {
 					Destroy(caughtEnemy.gameObject);
+					Destroy(daJuice);
+				}
+				else {
+					if(daJuice == null) {
+						daJuice = (GameObject)Instantiate(Resources.Load<GameObject>("JuiceShmup/Juice"), transform.position, Quaternion.identity);
+						daJuice.transform.SetParent(transform);
+					}
+					daJuice.transform.localScale += new Vector3(0, 2, 0);
+					daJuice.transform.position += new Vector3(0, -0.5f, 0);
 				}
 			}
 			else {
