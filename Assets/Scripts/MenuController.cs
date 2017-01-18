@@ -45,7 +45,7 @@ public class MenuController : MonoBehaviour {
 		}
 		MenuBasedPlatformerMovement player = GameObject.FindGameObjectWithTag("Player").GetComponent<MenuBasedPlatformerMovement>();
 		Type playerType = Type.GetType("MenuBasedPlatformerMovement");
-		GameObject actionOption = (GameObject)Instantiate(Resources.Load<GameObject>("prefabs/MenuAction"), currentOption.transform.position + new Vector3(0, 100, 0), Quaternion.identity);
+		GameObject actionOption = (GameObject)Instantiate(Resources.Load<GameObject>("prefabs/MenuAction"), targetList.GetChild(targetList.childCount - 1).position, Quaternion.identity);
 		actionOption.transform.SetParent(targetList, false);
 		actionOption.GetComponent<MenuActionScript>().Initialize(playerType.GetMethod("PrintTest"), player);
 		actionOption.GetComponentInChildren<Text>().text = "hi";
