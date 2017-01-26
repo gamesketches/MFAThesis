@@ -38,7 +38,7 @@ public class DirectionalBlockBehavior : MonoBehaviour {
 	void Update () {
 		foreach(DirectionalBlockCollider collider in colliders) {
 			if(!moving && collider.colliding) {
-			StartCoroutine(Move(directionVector[(int)direction]));
+			StartCoroutine(Move(directionVector[collider.transform.GetSiblingIndex()]));
 		}
 
 		}

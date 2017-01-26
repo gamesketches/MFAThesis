@@ -17,9 +17,14 @@ public class DirectionalSlot : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other) {
 		if(other.tag == "directionBlock") {
-			if(other.gameObject.GetComponent<DirectionalBlockBehavior>().direction == direction) {
-				occupied = true;
-			}
+			//if(other.gameObject.GetComponent<DirectionalBlockBehavior>().direction == direction) {
+			occupied = true;
+			GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("FullAnemone");
+			Destroy(other.gameObject);
+			Vector3 bubblePosition = transform.position;
+			bubblePosition.z = -2;
+			Instantiate(Resources.Load<GameObject>("prefabs/BubbleParticles"), bubblePosition, Quaternion.identity);
+			//}
 		}
 	}
 }

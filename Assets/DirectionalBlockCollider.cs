@@ -18,9 +18,16 @@ public class DirectionalBlockCollider : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other) {
 		if(other.tag == "Player" && coreDirection){
+			Debug.Log(coreDirection);
 			colliding = true;
 			}
 		else if(other.tag == "directionBlock") {		
+			colliding = true;
+		}
+	}
+
+	void OnTriggerStay2D(Collider2D other) {
+		if(other.tag == "Player" && coreDirection) {
 			colliding = true;
 		}
 	}
