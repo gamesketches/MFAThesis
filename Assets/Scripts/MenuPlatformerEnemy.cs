@@ -20,8 +20,8 @@ public class MenuPlatformerEnemy : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
-		if(other.gameObject.name == "AttackHitBox(Clone)") {
-			Destroy(gameObject);
+		if(other.tag == "Player") {
+			Debug.Log("Meow");
 		}
 		else {
 			Debug.Log(other.gameObject.name);
