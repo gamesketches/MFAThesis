@@ -6,17 +6,27 @@
  				<Action>Forward</Action>
  				<Action>Back</Action>
  				<Action>Turn</Action>
+ 				<Action>Slide</Action>
+ 				<Action>Dash</Action>
  			</List>
  			<Action>Stop</Action>
  		</List>
  		<List name="Jump">
  			<Action>Jump</Action>
+ 			<Action>AirDash</Action>
+ 			<Action>DoubleJump</Action>
  			<Action>Hop</Action>
+ 			<Action>SuperJump</Action>
  		</List>
  		<List name="Attack">
+ 			<Action>SpinAttack</Action>
+ 			<Action>JumpSlash</Action>
+ 			<Action>Thrust</Action>
+ 			<Action>StudderStep</Action>
  			<Action>High</Action>
  			<Action>Middle</Action>
  			<Action>Low</Action>
+ 			<Action>SlideAttack</Action>
  		</List>
  		<List name="Item">
  			<List name="Potion">
