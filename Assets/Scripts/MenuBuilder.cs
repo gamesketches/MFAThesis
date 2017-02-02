@@ -52,7 +52,7 @@ public class MenuBuilder : MonoBehaviour {
 			else if(node.Name == "List") {
 				GameObject actionOption = (GameObject)Instantiate(Resources.Load<GameObject>("prefabs/MenuAction"), newPos, Quaternion.identity);
 				actionOption.transform.SetParent(listOption.transform, false);
-				Vector3 childPos = new Vector3(offset.x / 2, 0, 0);
+				Vector3 childPos = new Vector3(offset.x / 2, -10, 0);
 				actionOption.GetComponent<MenuActionScript>().InitializeAsList(GenMenuList(node, actionOption.transform, childPos));
 				actionOption.GetComponentInChildren<Text>().text = node.Attributes[0].Value;
 			}

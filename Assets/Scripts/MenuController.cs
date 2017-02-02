@@ -9,6 +9,7 @@ public class MenuController : MonoBehaviour {
 	Transform[] currentOptionList;
 	int listPosition;
 	GameObject pointer;
+	float horizontalOffset;
 	// Use this for initialization
 	void Awake () {
 		pointer = (GameObject)Instantiate(Resources.Load<GameObject>("prefabs/MenuSelector"));
@@ -18,9 +19,10 @@ public class MenuController : MonoBehaviour {
 	public void Initialize(Transform optionList) {
 		currentOptionList = optionList.GetComponentsInChildren<Transform>();
 		currentOption = currentOptionList[listPosition];
-		pointer.transform.position = currentOption.position - new Vector3(230, 0, 0);
+		horizontalOffset = (pointer.GetComponent<RectTransform>().rect.width / 2) + currentOption.GetComponent<RectTransform>().rect.width / 2;
+		UpdatePosition();
 		pointer.transform.SetParent(GameObject.Find("Canvas").transform);
-		AddNode(new string[] {"Move", "Walk"});
+		//AddNode(new string[] {"Move", "Walk"});
 	}
 
 	public void ClearOptionList() {
@@ -95,6 +97,6 @@ public class MenuController : MonoBehaviour {
 	}
 
 	void UpdatePosition() {
-		pointer.transform.position = currentOption.position - new Vector3(230, 0, 0);
+		pointer.transform.position = currentOption.position - new Vector3(horizontalOffset, 0, 0);
 	}
 }
