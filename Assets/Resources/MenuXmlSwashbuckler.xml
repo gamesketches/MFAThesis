@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+ <List name="Actions">
+ 		<List name="Attack">
+ 			<List name="Normal">
+ 			<Action>High</Action>
+ 			<Action>Middle</Action>
+ 			<Action>Low</Action>
+ 			</List>
+ 			<List name="Fence">
+ 				<Action>SlideAttack</Action>
+ 				<Action>JumpSlash</Action>
+	 			<Action>StudderStep</Action>
+	 		</List>
+ 		</List>
+ 		<List name="Aerobics">
+ 			<List name="Grounded">
+	 			<Action>Jump</Action>
+	 			<Action>Hop</Action>
+	 			<Action>SuperJump</Action>
+	 		</List>
+	 		<List name="Airbourne">
+ 				<Action>DoubleJump</Action>
+ 			</List>
+ 		</List>
+		<List name="Movement">
+ 			<List name="Normal">
+ 				<Action>Forward</Action>
+ 				<Action>Back</Action>
+ 				<Action>Stop</Action>
+ 			</List>
+ 		</List>
+ </List>
+</Root>

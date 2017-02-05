@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class MenuPlatformerEnemy : MonoBehaviour {
@@ -21,7 +22,7 @@ public class MenuPlatformerEnemy : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other) {
 		if(other.tag == "Player") {
-			Debug.Log("Meow");
+			SceneManager.LoadScene(1);
 		}
 		else {
 			Debug.Log(other.gameObject.name);

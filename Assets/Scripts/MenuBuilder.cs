@@ -6,6 +6,8 @@ using System.Xml;
 using System;
 using System.Reflection;
 
+public enum playerClass {Fencer, Acrobat, Swashbuckler};
+
 public class MenuBuilder : MonoBehaviour {
 
 	XmlDocument menuXML;
@@ -14,13 +16,15 @@ public class MenuBuilder : MonoBehaviour {
 	Type playerType;
 	MenuController pointer;
 	public Vector3 startPosition;
+	public playerClass myClass;
+
 
 	// Use this for initialization
 	void Start () {
 		RectTransform rect = Resources.Load<GameObject>("prefabs/MenuAction").GetComponent<RectTransform>();
 		offset = new Vector3(rect.rect.width, rect.rect.height, 0);
 		player = GameObject.FindGameObjectWithTag("Player").GetComponent<MenuBasedPlatformerMovement>();
-		TextAsset menuData = Resources.Load("MenuXML") as TextAsset;
+		TextAsset menuData = Resources.Load("MenuXML" + myClass.ToString()) as TextAsset;
 
 		playerType = Type.GetType("MenuBasedPlatformerMovement");
 		menuXML = new XmlDocument();

@@ -19,7 +19,7 @@ public class MenuController : MonoBehaviour {
 	public void Initialize(Transform optionList) {
 		currentOptionList = optionList.GetComponentsInChildren<Transform>();
 		currentOption = currentOptionList[listPosition];
-		horizontalOffset = (pointer.GetComponent<RectTransform>().rect.width / 2) + currentOption.GetComponent<RectTransform>().rect.width / 2;
+		horizontalOffset = -35;//-currentOption.GetComponent<RectTransform>().rect.width;//(pointer.GetComponent<RectTransform>().rect.width / 2) + currentOption.GetComponent<RectTransform>().rect.width / 2;
 		UpdatePosition();
 		pointer.transform.SetParent(GameObject.Find("Canvas").transform);
 		//AddNode(new string[] {"Move", "Walk"});
