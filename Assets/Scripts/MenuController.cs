@@ -31,7 +31,7 @@ public class MenuController : MonoBehaviour {
 		}
 	}
 
-	void AddNode(string[] optionTree) {
+	public void AddNode(string[] optionTree) {
 		Transform targetList = currentOption.root;
 		Text[] texts = currentOption.root.GetComponentsInChildren<Text>();
 		for(int i = 0; i < optionTree.Length; i++) {
@@ -49,6 +49,7 @@ public class MenuController : MonoBehaviour {
 		Type playerType = Type.GetType("MenuBasedPlatformerMovement");
 		GameObject actionOption = (GameObject)Instantiate(Resources.Load<GameObject>("prefabs/MenuAction"), targetList.GetChild(targetList.childCount - 1).position, Quaternion.identity);
 		actionOption.transform.SetParent(targetList, false);
+		actionOption.GetComponent<RectTransform>().position = targetList.GetChild(targetList.childCount - 2).GetComponent<RectTransform>().position - new Vector3(0, 70, 0);
 		actionOption.GetComponent<MenuActionScript>().Initialize(playerType.GetMethod("PrintTest"), player);
 		actionOption.GetComponentInChildren<Text>().text = "hi";
 	}
