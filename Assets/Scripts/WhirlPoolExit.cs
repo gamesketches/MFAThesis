@@ -46,5 +46,6 @@ public class WhirlPoolExit : MonoBehaviour {
 			t += Time.deltaTime;
 			yield return null;
 		}
+		transform.parent.gameObject.GetComponentInChildren<whirlPoolBehavior>().active = false;
 	}
 }

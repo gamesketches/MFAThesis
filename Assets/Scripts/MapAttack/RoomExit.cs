@@ -32,6 +32,7 @@ public class RoomExit : MonoBehaviour {
 	IEnumerator RoomTransition(GameObject player) {
 		float t = 0;
 		Vector3 targetPos = transform.position;
+		targetPos.z = targetPos.z / 2;
 		Vector3 startPos = Camera.main.transform.position;
 		float rotationAmount = 0;
 		switch(dir) {
@@ -53,10 +54,10 @@ public class RoomExit : MonoBehaviour {
 		}
 		Quaternion targetRotation = Quaternion.Euler(0, 0, rotationAmount);
 		while(t < 1) {
-			Camera.main.transform.position = Vector3.Lerp(startPos, targetPos, t);
+			Camera.main.transform.position = Vector3.Lerp(startPos, targetPos, t * 1.1f);
 			Camera.main.transform.rotation = Quaternion.Lerp(Quaternion.identity, targetRotation, t);
-			Camera.main.fieldOfView = Mathf.Lerp(60, 1, t / 2);
-			t += Time.deltaTime;
+			Camera.main.fieldOfView = Mathf.Lerp(60, 1, t / 3);
+			t += Time.deltaTime / 2;
 			yield return null;
 		}
 
