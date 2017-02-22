@@ -56,7 +56,7 @@ public class TypingGameManager : MonoBehaviour {
 		phrases.Enqueue(new Phrase("Blue Letters Must Be Held", KeyCode.None, KeyCode.K, 4, new Vector2(200, 0), backgroundColor, null));
 		phrases.Enqueue(new Phrase("Letting go is starting over", KeyCode.None, KeyCode.J, 8, Vector2.zero, backgroundColor, null));
 		phrases.Enqueue(new Phrase("Now it begins", KeyCode.R, KeyCode.U, 2, Vector2.zero, backgroundColor, null));
-		phrases.Enqueue(new Phrase("The man is also filial piety", KeyCode.W, KeyCode.V,9, Vector3.zero, backgroundColor, null));
+		phrases.Enqueue(new Phrase("The man is also filial piety", KeyCode.W, KeyCode.V,4, Vector3.zero, backgroundColor, null));
 		phrases.Enqueue(new Phrase("And Good Guilty Of those who", KeyCode.R, KeyCode.Z, 4, Vector3.zero, backgroundColor, null));
 		phrases.Enqueue(new Phrase("fresh bad guilty", KeyCode.X, KeyCode.P, 7, Vector3.zero, backgroundColor, null));
 		phrases.Enqueue(new Phrase("and good for chaos", KeyCode.M, KeyCode.K, 6, Vector3.zero, backgroundColor, null));
@@ -204,6 +204,7 @@ public class TypingGameManager : MonoBehaviour {
 			audioSource.clip = Resources.Load<AudioClip>("Sounds/TypingGame/slide");
 			audioSource.Play();
 			Vector3 offset = currentPhrase.position - currentText.rectTransform.localPosition;
+			Debug.Log(offset);
 			foreach(GameObject text in GameObject.FindGameObjectsWithTag("finishedText")) {
 				StartCoroutine(MoveText(text.GetComponent<Text>(), offset));
 			}

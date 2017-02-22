@@ -5,6 +5,7 @@ public class WhirlPoolExit : MonoBehaviour {
 
 	public DirectionalSlot[] slots;
 	public Vector3 targetPos;
+	public Transform targetRoom;
 	public Vector3 targetRotation;
 	SpriteRenderer renderer;
 	// Use this for initialization
@@ -26,7 +27,7 @@ public class WhirlPoolExit : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other) {
 		if(other.tag == "Player" && renderer.enabled) {
 			other.transform.position = new Vector3(targetPos.x, targetPos.y, 0);
-			Debug.Log("this is still happening");
+			targetPos = new Vector3(targetRoom.transform.position.x, targetRoom.transform.position.y, -10);
 			StartCoroutine(ChangeRoom());
 		}
 	}
@@ -46,6 +47,8 @@ public class WhirlPoolExit : MonoBehaviour {
 			t += Time.deltaTime;
 			yield return null;
 		}
+		Camera.main.transform.position = targetPos;
+		Camera.main.transform.rotation = targetRot;
 		transform.parent.gameObject.GetComponentInChildren<whirlPoolBehavior>().active = false;
 	}
 }

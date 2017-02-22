@@ -11,6 +11,9 @@ public class DirectionalBlockBehavior : MonoBehaviour {
 								new Vector2 (-1, 0),
 								 new Vector2(1, 0)};
 	bool moving;
+
+	RigidbodyConstraints2D myConstraints;
+
 	// Use this for initialization
 	void Start () {
 		moving = false;
@@ -21,46 +24,57 @@ public class DirectionalBlockBehavior : MonoBehaviour {
 		switch(direction) {
 			case Direction.Up:
 				renderer.color = Color.blue;
+				myConstraints = RigidbodyConstraints2D.FreezePositionX;
 				break;
 			case Direction.Down:
 				renderer.color = Color.red;
+				myConstraints = RigidbodyConstraints2D.FreezePositionX;
 				break;
 			case Direction.Left:
-				renderer.color = Color.white;
+			renderer.color = Color.white;
+				myConstraints = RigidbodyConstraints2D.FreezePositionY;
 				break;
 			case Direction.Right:
-				renderer.color = Color.green;
+			renderer.color = Color.green;
+				myConstraints = RigidbodyConstraints2D.FreezePositionY;
 				break;
 		}
+
+		rb.constraints = myConstraints;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		foreach(DirectionalBlockCollider collider in colliders) {
+		/*foreach(DirectionalBlockCollider collider in colliders) {
 			if(!moving && collider.colliding) {
 			StartCoroutine(Move(directionVector[collider.transform.GetSiblingIndex()]));
-		}
-
-		}
+		}*/
 	}
 
-	/*void OnCollisionEnter2D(Collision2D other) {
-		if(other.gameObject.tag == "directionBlock") {
-			rb.constraints = RigidbodyConstraints2D.None;
+	void OnCollisionEnter2D(Collision2D other) {
+		if(other.gameObject.tag == "directionBlock" && !moving) {
+			rb.constraints = other.gameObject.GetComponent<Rigidbody2D>().constraints;
 			Debug.Log("removing constraints");
 			Debug.Log(other.contacts[0].point.y < transform.position.y);
 		}
 		else {
+			moving = true;
 			Debug.Log(other.gameObject.tag);
 		}
 	}
 
 	void OnCollisionExit2D(Collision2D other) {
 		if(other.gameObject.tag == "directionBlock") {
-			SetConstraints();
+			//SetConstraints();
+			rb.constraints = myConstraints;
 			Debug.Log("reenabling constraints");	
 		}
-	}*/
+		else {
+			moving = false;
+			Debug.Log(other.gameObject.tag + other.gameObject.name);
+		}
+
+	}
 
 	void SetConstraints(){
 		if(direction == Direction.Up || direction == Direction.Down) {
