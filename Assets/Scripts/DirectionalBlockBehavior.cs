@@ -39,8 +39,7 @@ public class DirectionalBlockBehavior : MonoBehaviour {
 				myConstraints = RigidbodyConstraints2D.FreezePositionY;
 				break;
 		}
-
-		rb.constraints = myConstraints;
+		rb.constraints = myConstraints^RigidbodyConstraints2D.FreezeRotation;
 	}
 	
 	// Update is called once per frame

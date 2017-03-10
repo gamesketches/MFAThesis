@@ -34,6 +34,7 @@ public class WhirlPoolExit : MonoBehaviour {
 
 	IEnumerator ChangeRoom() {
 		float t = 0;
+		Time.timeScale = 0;
 		Transform compass = GameObject.Find("Compass").transform;
 		Vector3 startPos = Camera.main.transform.position;
 		Quaternion startRot = Camera.main.transform.rotation;
@@ -44,9 +45,10 @@ public class WhirlPoolExit : MonoBehaviour {
 			Camera.main.transform.position = Vector3.Lerp(startPos, targetPos, t);
 			Camera.main.transform.rotation = Quaternion.Lerp(startRot, targetRot, t);
 			compass.rotation = Quaternion.Lerp(startCompassRot, targetCompassRot, t);
-			t += Time.deltaTime;
+			t += Time.unscaledDeltaTime;
 			yield return null;
 		}
+		Time.timeScale = 1;
 		Camera.main.transform.position = targetPos;
 		Camera.main.transform.rotation = targetRot;
 		transform.parent.gameObject.GetComponentInChildren<whirlPoolBehavior>().active = false;

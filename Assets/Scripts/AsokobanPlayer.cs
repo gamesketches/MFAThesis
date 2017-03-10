@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class AsokobanPlayer : MonoBehaviour {
 
 	public float speed = 1;
+	Animator animator;
 
 	System.Collections.Generic.List<Direction> currentPath;
 	Direction[] correctPath;
@@ -16,6 +17,7 @@ public class AsokobanPlayer : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		animator = GetComponent<Animator>(); 
 		correctPath = new Direction[4] {Direction.Up, Direction.Right, Direction.Right, Direction.Left};
 		currentPath = new System.Collections.Generic.List<Direction>();
 
@@ -27,23 +29,24 @@ public class AsokobanPlayer : MonoBehaviour {
 	void Update () {
 		int hori = Mathf.RoundToInt(Input.GetAxis("Horizontal"));
 		int vert = Mathf.RoundToInt(Input.GetAxis("Vertical"));
-		transform.Translate(hori * speed * Time.deltaTime, vert * speed * Time.deltaTime, 0);
-		if(hori != 0) {
-			if(hori > 0) {
-				spriteRenderer.sprite = Resources.Load<Sprite>("scubaRight");
-			}
-			else {
-				spriteRenderer.sprite = Resources.Load<Sprite>("scubaLeft");
-			}
+		if(vert > 0) {
+			animator.SetInteger("direction", (int)Direction.Up);
+		}
+		else if(vert < 0) {
+			animator.SetInteger("direction", (int)Direction.Down);
+		}
+		else if(hori < 0) {
+			animator.SetInteger("direction", (int)Direction.Left);
+			spriteRenderer.flipX = true;
+		}
+		else if(hori > 0) {
+			animator.SetInteger("direction", (int)Direction.Right);
+			spriteRenderer.flipX = false;
 		}
 		else {
-			if(vert > 0) {
-				spriteRenderer.sprite = Resources.Load<Sprite>("scubaUp");
-			}
-			else {
-				spriteRenderer.sprite = Resources.Load<Sprite>("scubaDown");
-			}
+			animator.SetInteger("direction", -1);
 		}
+		transform.Translate(hori * speed * Time.deltaTime, vert * speed * Time.deltaTime, 0);
 	}
 
 }
