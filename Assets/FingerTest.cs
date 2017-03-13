@@ -7,16 +7,20 @@ public class FingerTest : MonoBehaviour {
 	float fingerDensity;
 	LineRenderer finger;
 	public AnimationCurve fingerAnimationCurve;
+	EdgeCollider2D collider;
 	// Use this for initialization
 	void Start () {
 		finger = GetComponent<LineRenderer>();
 		fingerDensity = (float)transform.childCount;
-		Debug.Log(fingerDensity);
+		collider = GetComponent<EdgeCollider2D>();
 		fingerAnimationCurve = new AnimationCurve();
 		fingerAnimationCurve.AddKey(new Keyframe(0, 0));
+		Vector2[] colliderPoints = new Vector2[transform.childCount];
 		for(int i = 1; i < transform.childCount; i++) {
 			fingerAnimationCurve.AddKey(new Keyframe(i , transform.GetChild(i - 1).localPosition.y));
+			colliderPoints[i - 1] = new Vector2(transform.GetChild(i - 1).localPosition.x, transform.GetChild(i - 1).localPosition.y);
 		}
+		collider.points = colliderPoints;
 		float k = 0;
 		while(k < fingerDensity) {
 			finger.numPositions = finger.numPositions + 1;
@@ -27,12 +31,6 @@ public class FingerTest : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-		/*finger.numPositions = transform.childCount + 1;
-		finger.SetPosition(0, transform.position);
-		for(int i = 0; i < transform.childCount; i++) {
-			finger.SetPosition(i + 1, transform.GetChild(i).position);
-		}*/
 		UpdateKeyFrames();
 		GenerateFingerPoints();
 		if(Input.GetKeyDown(KeyCode.R)) {
@@ -43,10 +41,12 @@ public class FingerTest : MonoBehaviour {
 	void UpdateKeyFrames() {
 		fingerAnimationCurve.keys = new Keyframe[0];
 		fingerAnimationCurve.AddKey(new Keyframe(0, 0));
+		Vector2[] colliderPoints = new Vector2[transform.childCount];
 		for(int i = 1; i < transform.childCount + 1; i++) {
 			fingerAnimationCurve.AddKey(new Keyframe(i, transform.GetChild(i - 1).localPosition.y));
+			colliderPoints[i - 1] = new Vector2(transform.GetChild(i - 1).localPosition.x, transform.GetChild(i - 1).localPosition.y);
 		}
-
+		collider.points = colliderPoints;
 	}
 
 	void GenerateFingerPoints() {
