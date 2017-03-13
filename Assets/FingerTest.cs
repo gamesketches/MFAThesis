@@ -41,11 +41,8 @@ public class FingerTest : MonoBehaviour {
 	}
 
 	void UpdateKeyFrames() {
-		for(int i = 0; i < fingerAnimationCurve.keys.Length; i++) {
-			fingerAnimationCurve.RemoveKey(0);
-		}
+		fingerAnimationCurve.keys = new Keyframe[0];
 		fingerAnimationCurve.AddKey(new Keyframe(0, 0));
-		Debug.Log(transform.childCount);
 		for(int i = 1; i < transform.childCount + 1; i++) {
 			fingerAnimationCurve.AddKey(new Keyframe(i, transform.GetChild(i - 1).localPosition.y));
 		}
@@ -60,7 +57,7 @@ public class FingerTest : MonoBehaviour {
 		finger.GetPositions(positions);
 		for(int k = 0; k < finger.numPositions; k++){	
 			finger.SetPosition(k, new Vector3(i, fingerAnimationCurve.Evaluate(i)));
-			i += Time.deltaTime;
+			i += Time.fixedDeltaTime;
 		}
 	}
 
