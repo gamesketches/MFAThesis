@@ -22,7 +22,8 @@ public class MenuPlatformerEnemy : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other) {
 		if(other.tag == "Player") {
-			SceneManager.LoadScene(1);
+			Debug.Log("wat");
+		//	SceneManager.LoadScene(0);
 		}
 		else {
 			Debug.Log(other.gameObject.name);

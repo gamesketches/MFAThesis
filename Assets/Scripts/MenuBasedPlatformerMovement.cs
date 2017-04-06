@@ -22,6 +22,7 @@ public class MenuBasedPlatformerMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 			animator.SetInteger("movement", (int)movementSpeed);
+			Vector3 playerPos = transform.position;
 			transform.Translate(movementSpeed * speed * Time.deltaTime * direction, 0, 0);
 		if(!animator.GetBool("grounded")) {
 			if(rb.velocity.y == 0) {
@@ -64,6 +65,7 @@ public class MenuBasedPlatformerMovement : MonoBehaviour {
 		float t = 0;
 		while(t < 0.5f) {
 			transform.Translate(0, -4 * Time.deltaTime * direction, 0);
+			Camera.main.transform.Translate(4 * Time.deltaTime * direction, 0, 0);
 			t += Time.deltaTime;
 			yield return null;
 		}

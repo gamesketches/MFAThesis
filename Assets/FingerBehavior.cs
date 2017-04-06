@@ -9,6 +9,7 @@ public class FingerBehavior : MonoBehaviour {
 	EdgeCollider2D collider;
 	public Vector3 targetPosition;
 	public float fingerResolution;
+	public bool myTurn;
 	// Use this for initialization
 	void Start () {
 		lineRenderer = GetComponent<LineRenderer>();
@@ -20,8 +21,9 @@ public class FingerBehavior : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(Input.anyKeyDown) {
-			targetPosition += Random.value * new Vector3(2, 2, 0);
-			UpdateFinger();
+			//targetPosition += Random.value * new Vector3(2, 2, 0);
+			if(myTurn) UpdateFinger();
+			myTurn = !myTurn;
 		}
 		UpdateKeyFrames();
 		UpdateFingerPoints();
@@ -33,9 +35,9 @@ public class FingerBehavior : MonoBehaviour {
 		transform.rotation = Quaternion.Euler(0, 0, angleRad * Mathf.Rad2Deg);
 
 		for(int i = 0; i < transform.childCount; i++) {
-			transform.GetChild(i).localPosition = new Vector3((Vector3.Distance(Vector3.zero, transform.worldToLocalMatrix.MultiplyPoint(target)) / transform.childCount) * i, Random.value * 5);
+			transform.GetChild(i).localPosition = new Vector3((Vector3.Distance(Vector3.zero, transform.worldToLocalMatrix.MultiplyPoint(target)) / transform.childCount) * i, Random.value * 2);
 		}
-		transform.GetChild(transform.childCount - 1).position = transform.worldToLocalMatrix.MultiplyPoint(target);
+		//transform.GetChild(transform.childCount - 1).position = transform.worldToLocalMatrix.MultiplyPoint(target);
 
 		fingerAnimationCurve.AddKey(new Keyframe(0, 0));
 		Vector2[] colliderPoints = new Vector2[transform.childCount];
@@ -49,7 +51,8 @@ public class FingerBehavior : MonoBehaviour {
 
 	void UpdateFinger() {
 		Rigidbody2D tip = transform.GetChild(transform.childCount - 1).GetComponent<Rigidbody2D>();
-		tip.AddForce(new Vector2(0, 10), ForceMode2D.Impulse);
+		tip.MovePosition(new Vector2(Random.Range(-3f, 3f), Random.Range(-2, -4)));
+		//tip.AddForce(new Vector2(0, 10), ForceMode2D.Impulse);
 	}
 
 	void UpdateKeyFrames() {

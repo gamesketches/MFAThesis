@@ -29,6 +29,7 @@ public class PlatformerDeath : MonoBehaviour {
 			yield return null;
 		}
 		Time.timeScale = 1;
+		Debug.Log("ha");
 		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
 }

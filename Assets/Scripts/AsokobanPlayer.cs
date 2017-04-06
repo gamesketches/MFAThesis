@@ -37,11 +37,11 @@ public class AsokobanPlayer : MonoBehaviour {
 		}
 		else if(hori < 0) {
 			animator.SetInteger("direction", (int)Direction.Left);
-			spriteRenderer.flipX = true;
+			spriteRenderer.flipX = false;
 		}
 		else if(hori > 0) {
 			animator.SetInteger("direction", (int)Direction.Right);
-			spriteRenderer.flipX = false;
+			spriteRenderer.flipX = true;
 		}
 		else {
 			animator.SetInteger("direction", -1);

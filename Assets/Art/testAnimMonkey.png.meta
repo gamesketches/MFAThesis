@@ -1,0 +1,590 @@
+fileFormatVersion: 2
+guid: 9c517d2c0a04d4017b0695e559cf6ece
+timeCreated: 1490734684
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: testAnimMonkey_0
+    21300002: testAnimMonkey_1
+    21300004: testAnimMonkey_2
+    21300006: testAnimMonkey_3
+    21300008: testAnimMonkey_4
+    21300010: testAnimMonkey_5
+    21300012: testAnimMonkey_6
+    21300014: testAnimMonkey_7
+    21300016: testAnimMonkey_8
+    21300018: testAnimMonkey_9
+    21300020: testAnimMonkey_10
+    21300022: testAnimMonkey_11
+    21300024: testAnimMonkey_12
+    21300026: testAnimMonkey_13
+    21300028: testAnimMonkey_14
+    21300030: testAnimMonkey_15
+    21300032: testAnimMonkey_16
+    21300034: testAnimMonkey_17
+    21300036: testAnimMonkey_18
+    21300038: testAnimMonkey_19
+    21300040: testAnimMonkey_20
+    21300042: testAnimMonkey_21
+    21300044: testAnimMonkey_22
+    21300046: testAnimMonkey_23
+    21300048: testAnimMonkey_24
+    21300050: testAnimMonkey_25
+    21300052: testAnimMonkey_26
+    21300054: testAnimMonkey_27
+    21300056: testAnimMonkey_28
+    21300058: testAnimMonkey_29
+    21300060: testAnimMonkey_30
+    21300062: testAnimMonkey_31
+    21300064: testAnimMonkey_32
+    21300066: testAnimMonkey_33
+    21300068: testAnimMonkey_34
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: iPhone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: WebGL
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: testAnimMonkey_0
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 292
+        width: 121
+        height: 196
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: testAnimMonkey_1
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 295
+        width: 152
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: testAnimMonkey_2
+      rect:
+        serializedVersion: 2
+        x: 634
+        y: 295
+        width: 135
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: testAnimMonkey_3
+      rect:
+        serializedVersion: 2
+        x: 875
+        y: 292
+        width: 150
+        height: 196
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: testAnimMonkey_4
+      rect:
+        serializedVersion: 2
+        x: 1128
+        y: 295
+        width: 152
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: testAnimMonkey_5
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 295
+        width: 135
+        height: 191
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: testAnimMonkey_6
+      rect:
+        serializedVersion: 2
+        x: 1519
+        y: 429
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: testAnimMonkey_7
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 234
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: testAnimMonkey_8
+      rect:
+        serializedVersion: 2
+        x: 405
+        y: 294
+        width: 19
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: testAnimMonkey_9
+      rect:
+        serializedVersion: 2
+        x: 789
+        y: 342
+        width: 1
+        height: 1
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: testAnimMonkey_10
+      rect:
+        serializedVersion: 2
+        x: 1035
+        y: 333
+        width: 2
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: testAnimMonkey_11
+      rect:
+        serializedVersion: 2
+        x: 1173
+        y: 294
+        width: 19
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: testAnimMonkey_12
+      rect:
+        serializedVersion: 2
+        x: 1438
+        y: 161
+        width: 63
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: testAnimMonkey_13
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 25
+        width: 170
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: testAnimMonkey_14
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 113
+        width: 5
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: testAnimMonkey_15
+      rect:
+        serializedVersion: 2
+        x: 332
+        y: 25
+        width: 170
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: testAnimMonkey_16
+      rect:
+        serializedVersion: 2
+        x: 544
+        y: 148
+        width: 5
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: testAnimMonkey_17
+      rect:
+        serializedVersion: 2
+        x: 588
+        y: 25
+        width: 170
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: testAnimMonkey_18
+      rect:
+        serializedVersion: 2
+        x: 786
+        y: 112
+        width: 5
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: testAnimMonkey_19
+      rect:
+        serializedVersion: 2
+        x: 844
+        y: 25
+        width: 170
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: testAnimMonkey_20
+      rect:
+        serializedVersion: 2
+        x: 1085
+        y: 115
+        width: 5
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: testAnimMonkey_21
+      rect:
+        serializedVersion: 2
+        x: 283
+        y: 82
+        width: 17
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: testAnimMonkey_22
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 73
+        width: 12
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: testAnimMonkey_23
+      rect:
+        serializedVersion: 2
+        x: 554
+        y: 75
+        width: 17
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: testAnimMonkey_24
+      rect:
+        serializedVersion: 2
+        x: 533
+        y: 96
+        width: 12
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: testAnimMonkey_25
+      rect:
+        serializedVersion: 2
+        x: 787
+        y: 33
+        width: 17
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: testAnimMonkey_26
+      rect:
+        serializedVersion: 2
+        x: 786
+        y: 75
+        width: 12
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: testAnimMonkey_27
+      rect:
+        serializedVersion: 2
+        x: 1069
+        y: 49
+        width: 17
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: testAnimMonkey_28
+      rect:
+        serializedVersion: 2
+        x: 1090
+        y: 78
+        width: 12
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: testAnimMonkey_29
+      rect:
+        serializedVersion: 2
+        x: 286
+        y: 53
+        width: 9
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: testAnimMonkey_30
+      rect:
+        serializedVersion: 2
+        x: 531
+        y: 37
+        width: 9
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: testAnimMonkey_31
+      rect:
+        serializedVersion: 2
+        x: 825
+        y: 90
+        width: 9
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: testAnimMonkey_32
+      rect:
+        serializedVersion: 2
+        x: 1114
+        y: 60
+        width: 9
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: testAnimMonkey_33
+      rect:
+        serializedVersion: 2
+        x: 784
+        y: 335
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: testAnimMonkey_34
+      rect:
+        serializedVersion: 2
+        x: 1146
+        y: 142
+        width: 46
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
