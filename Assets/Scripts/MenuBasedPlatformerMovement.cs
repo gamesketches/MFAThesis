@@ -12,6 +12,7 @@ public class MenuBasedPlatformerMovement : MonoBehaviour {
 	private int direction;
 	private bool doubleJumped;
 	public bool blocking;
+
 	// Use this for initialization
 	void Start () {
 		direction = 1;
@@ -86,6 +87,7 @@ public class MenuBasedPlatformerMovement : MonoBehaviour {
 	}
 
 	public void Jump() {
+		gameObject.layer = 0;
 		if(animator.GetBool("grounded")) {
 			animator.SetBool("grounded", false);
 			rb.AddForce(new Vector2(0, jumpPower), ForceMode2D.Impulse);
@@ -99,6 +101,7 @@ public class MenuBasedPlatformerMovement : MonoBehaviour {
 		}
 	}
 	public void SuperJump() {
+			gameObject.layer = 0;
 		if(animator.GetBool("grounded")) {
 			animator.SetBool("grounded", false);
 			rb.AddForce(new Vector2(0, jumpPower * 1.7f), ForceMode2D.Impulse);
@@ -203,5 +206,9 @@ public class MenuBasedPlatformerMovement : MonoBehaviour {
 
 	void ApplyMovementForces(float x, float y) {
 		rb.AddForce(new Vector2(x, y), ForceMode2D.Impulse);
+	}
+
+	public void Sail() {
+		gameObject.layer = 8;
 	}
 }

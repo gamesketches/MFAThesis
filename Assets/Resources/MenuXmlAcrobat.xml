@@ -23,9 +23,12 @@
 	 			<Action>AirDash</Action>
  			</List>
  		</List>
+ 		<List name="Shield">
+		 	<Action>Block</Action>
+		 	<Action>Sail</Action>
+		 </List>
  		<List name="Attack">
  			<Action>Middle</Action>
  		</List>
- 		<Action>Block</Action>
  </List>
 </Root>
