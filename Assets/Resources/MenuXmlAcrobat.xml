@@ -26,5 +26,6 @@
  		<List name="Attack">
  			<Action>Middle</Action>
  		</List>
+ 		<Action>Block</Action>
  </List>
 </Root>

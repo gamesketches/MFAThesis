@@ -11,6 +11,7 @@ public class MenuBasedPlatformerMovement : MonoBehaviour {
 	private float movementSpeed;
 	private int direction;
 	private bool doubleJumped;
+	public bool blocking;
 	// Use this for initialization
 	void Start () {
 		direction = 1;
@@ -60,6 +61,17 @@ public class MenuBasedPlatformerMovement : MonoBehaviour {
 	public void Dash() {
 		rb.AddForce(new Vector2(6, 1), ForceMode2D.Impulse);
 	}
+
+	public void Block() {
+		StartCoroutine(StartBlocking());
+	}
+
+	IEnumerator StartBlocking() {
+		blocking = true;
+		yield return new WaitForSeconds(1);
+		blocking = false;
+	}
+
 
 	IEnumerator Sliding() {
 		float t = 0;
