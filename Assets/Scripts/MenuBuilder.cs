@@ -42,7 +42,7 @@ public class MenuBuilder : MonoBehaviour {
 	// Update is called once per frame
 	Transform GenMenuList (XmlNode topNode, Transform parent, Vector3 position) {
 		Vector3 newPos = position;
-		GameObject listOption = (GameObject)Instantiate(listOptionPrefab, newPos, Quaternion.identity);
+		GameObject listOption = (GameObject)Instantiate(new GameObject(), newPos, Quaternion.identity);
 		listOption.transform.SetParent(parent, false);
 		int numOptionsInList = 0;
 		foreach(XmlNode node in topNode.ChildNodes) {
@@ -53,10 +53,10 @@ public class MenuBuilder : MonoBehaviour {
 				actionOption.GetComponentInChildren<Text>().text = node.InnerText;
 			}
 			else if(node.Name == "List") {
-				GameObject actionOption = (GameObject)Instantiate(menuActionPrefab, newPos, Quaternion.identity);
-				actionOption.transform.SetParent(listOption.transform, false);
-				actionOption.GetComponent<MenuActionScript>().InitializeAsList(GenMenuList(node, actionOption.transform, subListOffset));
-				actionOption.GetComponentInChildren<Text>().text = node.Attributes[0].Value;
+				GameObject listActionOption = (GameObject)Instantiate(listOptionPrefab, newPos, Quaternion.identity);
+				listActionOption.transform.SetParent(listOption.transform, false);
+				listActionOption.GetComponent<MenuActionScript>().InitializeAsList(GenMenuList(node, listActionOption.transform, subListOffset));
+				listActionOption.GetComponentInChildren<Text>().text = node.Attributes[0].Value;
 			}
 			else Debug.Log(node.InnerText);
 
